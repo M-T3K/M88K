@@ -11,14 +11,15 @@
         "Other"
     ],
     "activationEvents": [
-        "onCommand:extension.sayHello"
+        "onCommand:extension.m88k.textTools"
     ],
     "main": "./out/extension",
     "contributes": {
         "commands": [
             {
-                "command": "extension.sayHello",
-                "title": "Hello World"
+                "command": "extension.m88k.textTools",
+                "title": "Text Tools",
+                "description": "A series of Text Tools & Functionalities to help with the development of m88k applications."
             }
         ]
     },
