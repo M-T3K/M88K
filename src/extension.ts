@@ -54,10 +54,11 @@ function endianTransform(txt: string) {
     return endians.join('');
 }
 
-function hexToDec(txt: string) {
+// @wip
+// function hexToDec(txt: string) {
 
-    return "" + parseInt(txt, 16);
-}
+//     return "" + parseInt(txt, 16);
+// }
 
 // Function that we call to modify selected text.
 function textTools() {
@@ -93,10 +94,11 @@ function textTools() {
         label: "addHex",
         description: "[1234] => [0x1234]" 
     })
-    items.push({
-        label: "hexToDecimal",
-        description: "[0xab2] => [2738]" 
-    })
+    // @wip
+    // items.push({
+    //     label: "hexToDecimal",
+    //     description: "[0xab2] => [2738]" 
+    // })
     
     // Quick Pick Menu as a Promess
     Window.showQuickPick(items).then((selection) => {
@@ -134,18 +136,19 @@ function textTools() {
 
             });
         }    
-        if(selection.label == "toDecimal") {
+        // @Wip
+        // if(selection.label == "toDecimal") {
 
-            editor.edit(function (edit) {
+        //     editor.edit(function (edit) {
 
-                for(var i = 0; i < S.length; ++i) {
+        //         for(var i = 0; i < S.length; ++i) {
 
-                    let txt: string = doc.getText(new Range(S[i].start, S[i].end));
-                    edit.replace(S[i], hexToDec(txt))
-                }
-            })
+        //             let txt: string = doc.getText(new Range(S[i].start, S[i].end));
+        //             edit.replace(S[i], hexToDec(txt))
+        //         }
+        //     })
 
-        }
+        // }
 
     });             
 
