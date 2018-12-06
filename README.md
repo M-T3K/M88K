@@ -1,10 +1,10 @@
-# m88k README
+# M88K 
 
-This is the README for your extension "m88k". After writing up a brief description, we recommend including the following sections.
+This is an attempt to create a fully fledged IDE for the assembly language used by Motorola 88K family of Microprocessor. So far it does not cover many features but eventually it will have everything that one may need, from Syntax Highlighting to a built-in emulator for this architecture.
 
 ## Features
 
-This is an attempt to create a fully fledged IDE for the assembly language used by Motorola 88K family of Microprocessor. Currently it only offers 2 functions:
+Currently it only offers 2 functions:
 
 - **endianTransform**: Changes the endian mode of a hex number.
 - **addHex**: Adds '0x' at the beginning of a string.

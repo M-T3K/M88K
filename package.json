@@ -3,7 +3,7 @@
     "displayName": "M88K",
     "description": "Sort of an IDE for M88K.",
     "version": "0.0.1",
-    "publisher": "NoPublisher",
+    "publisher": "Kiwii",
     "engines": {
         "vscode": "^1.29.0"
     },
