@@ -54,6 +54,11 @@ function endianTransform(txt: string) {
     return endians.join('');
 }
 
+function hexToDec(txt: string) {
+
+    return "" + parseInt(txt, 16);
+}
+
 // Function that we call to modify selected text.
 function textTools() {
 
@@ -88,6 +93,10 @@ function textTools() {
         label: "addHex",
         description: "[1234] => [0x1234]" 
     })
+    items.push({
+        label: "hexToDecimal",
+        description: "[0xab2] => [2738]" 
+    })
     
     // Quick Pick Menu as a Promess
     Window.showQuickPick(items).then((selection) => {
@@ -99,6 +108,7 @@ function textTools() {
         }
 
         // We Convert to Little Endian
+
         if(selection.label === "endianTransform") {
 
             editor.edit(function (edit) {
@@ -111,7 +121,31 @@ function textTools() {
 
             });
 
-        }        
+        }   
+        if(selection.label === "addHex") {
+
+            editor.edit(function (edit) {
+
+                for(var i = 0; i < S.length; ++i) {
+
+                    let txt: string = doc.getText(new Range(S[i].start, S[i].end));
+                    edit.replace(S[i], "0x".concat(txt));
+                }
+
+            });
+        }    
+        if(selection.label == "toDecimal") {
+
+            editor.edit(function (edit) {
+
+                for(var i = 0; i < S.length; ++i) {
+
+                    let txt: string = doc.getText(new Range(S[i].start, S[i].end));
+                    edit.replace(S[i], hexToDec(txt))
+                }
+            })
+
+        }
 
     });             
 
