@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to the "m88k" extension will be documented in this file.
 
+## [0.1.1]
+
+- Added the M88K-HK Standard to the readme file.
+
 ## [0.1.0]
 
 - Syntax Highlighting has been completed. It should work with all custom themes. 
