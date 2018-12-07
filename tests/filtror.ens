@@ -1,0 +1,703 @@
+; MACRO SECTION
+
+; All-Purpose MACROs
+
+; LEA : Load Effective Address
+; rA <- *eti
+LEA:   MACRO(ra, eti)
+    or   ra, r0, low(eti)
+    or.u ra, ra, high(eti)
+ENDMACRO
+
+; LOAD: Load (Load Effective Address) 
+; rA <- LEA(rA, eti)
+; Basicamente, carga el valor de la direccion obtenida por LEA
+; rA <- *Lea(rA, eti)
+LOAD:   MACRO(ra, eti)
+    LEA(ra, eti)        ; rA <- &eti
+    ld ra, ra, 0        ; rA <- *rA
+ENDMACRO
+
+; DBNZ : Decrement branch not Zero
+; rA <- rA - 1 ; PC <- eti
+DBNZ:   MACRO(ra, eti)
+    sub ra, ra, 1
+    cmp r2, ra, 0
+    bb0 eq, r2, eti          ; bb1 eq, r4, eti should work as well
+ENDMACRO
+
+; SWAP: Swap two registers
+; rA <- rB; rB <- rA
+swap:   MACRO(ra, rb)
+    or r2, ra, ra
+    or ra, rb, rb
+    or rb, r2, r2
+ENDMACRO
+
+; Stack-Related MACROs
+
+; PUSH: Stack basic operation
+; r30 <- r30 - 4 ; r30 <- rA 
+PUSH:   MACRO(ra)
+    subu r30, r30, 4        ; Probably just 1 instruction (st ra, r30, -4)
+    st ra, r30, 0           ; works as well, not sure tho
+ENDMACRO
+
+; POP: Stack basic operation
+; rA <- r30; r30 <- r30 + 4
+POP:    MACRO(ra)
+    ld ra, r30, 0
+    addu r30, r30, 4
+ENDMACRO
+
+; Hi-lvl
+
+; Usamos r2 porque segun nuestro estandar, r2 y r3 no se deben 
+; modificar en ninguna subrutina. Asi garantizamos que estas macros
+; no afecten a ningun resultado.
+IF:			MACRO(ra, condicion, rb, eti)
+			cmp r2, ra, rb
+			bb1 condicion, r2, eti
+ENDMACRO
+IFNOT: 		MACRO(ra, condicion, rb, eti)
+			cmp r2, ra, rb
+			bb0 condicion, r2, eti
+ENDMACRO
+
+
+_func2:		MACRO(subr, arg1, arg2)
+			PUSH(arg2)
+			PUSH(arg1)
+			bsr subr
+			POP(arg1)
+			POP(arg2)
+ENDMACRO
+
+_func4:		MACRO(subr, arg1, arg2, arg3, arg4)
+			PUSH(arg4)
+			PUSH(arg3)
+			PUSH(arg2)
+			PUSH(arg1)
+			bsr subr
+			POP(arg1)
+			POP(arg2)
+			POP(arg3)
+			POP(arg4)
+ENDMACRO
+
+
+; PERSONAL USE MACROS
+; @info: dato1 es la direccion del primer dato (Imagen1, Dupla, etc...)
+; @info: dato2 es la direccion del segundo dato
+; @info: subr es la direccion de branch de la siguiente subrutina
+; @info: No incluye la instruccion del emulador 'stop'
+PRUEBA:     MACRO(dato1, dato2, subr) 
+            LEA(r30, 65000)
+		    LEA(r20, dato2)
+		    LEA(r21, dato1)
+		    _func2(subr, r21, r20)
+ENDMACRO
+
+PRUEBANF:	MACRO(dato, subr)
+			LEA(r30, 65000)
+		    LOAD(r20, dato)
+		    PUSH(r20)
+		    bsr subr
+		    POP(r20)
+ENDMACRO
+
+PRUEBASUBM:	MACRO(img, subm, i, j, subr)
+			LEA(r30, 65000)
+			LOAD(r20, j) 	; Se pasa por valor => LOAD
+			LOAD(r21, i)	; Se pasa por valor => LOAD
+			LEA(r22, subm)	; Se pasa por & => LEA
+			LEA(r23, img)	; Se pasa por & => LEA
+			_func4(subr, r23, r22, r21, r20)
+ENDMACRO
+
+PRUEBAFILPXL:	MACRO(img, i, j, MFiltro, subr)
+				LEA(r30, 65000)
+				LEA(r20, MFiltro)	; r23 <- &MFiltro
+				LOAD(r21, j)		; r22 <- j
+				LOAD(r22, i) 		; r21 <- i
+				LEA(r23, img)		; r20 <- &Imagen
+				_func4(subr, r23, r22, r21, r20)
+ENDMACRO
+
+
+
+; Otros
+
+; @info
+; rows :: la fila en la que esta el elemeto que queremos
+; num_cols :: cantidad de columnas total (elementos por fila)
+; elem :: la columan en la que se encuentra el elem que queremos
+; sz :: tamano de cada elemento (1 byte = 0x1, 4 bytes = 0x4)
+; base :: &primer_elem_matriz
+getAt: 		MACRO(row, N, col, Imagen)
+			muls r2, row, N			; row * N
+			addu r2, r2, col		; row * N + col
+			addu Imagen, Imagen, r2	; &Imagen = &(Imagen + r11)
+ENDMACRO
+
+cPILA:		MACRO()
+			PUSH(r1)
+			PUSH(r31)
+			or r31, r30, r30
+ENDMACRO
+
+dPILA:		MACRO()
+			or r30, r31, r31
+			POP(r31)
+			POP(r1)
+ENDMACRO
+
+;Variables
+org 0
+nF:		data	3	; NFILTRADOS
+
+
+; DATOS
+org     0x800
+
+; CONSTANTES
+
+__0:		data 	0	
+__1:		data 	1
+__2:		data 	2
+__3:		data 	3
+__4:		data 	4
+__5:		data 	5
+__6:		data 	6
+__7:		data 	7
+__8:		data 	8
+__9:		data 	9
+__10:		data 	10
+			
+; OPER
+oper1:		data	4
+oper2:		data	-5
+oper3:		data	0
+oper4:		data	2
+
+; DUPLA
+
+Dupla:  	data    1, 2
+Dupla2: 	data	2, 1
+Dupla3: 	data	1,-2
+Dupla4:		data	-1,2
+Dupla5:		data	0,1
+Dupla6:		data	1,0
+Dupla7:		data	-1,-2
+
+
+
+; IMAGEN
+IMAGEN1:	data    4, 8
+			data    0x00000000, 0x00000000
+			data    0x00000000, 0x00002100
+			data    0x00000000, 0x00000000
+			data    0x00000000, 0x00000000
+
+			; 00 00 00 00 | 00 00 00 00
+			; 00 00 00 00 | 00 21 00 00
+			; 00 00 00 00 | 00 00 00 00
+			; 00 00 00 00 | 00 00 00 00
+			
+IMAGEN2:	data    4, 8
+			data    0x00000000, 0x00000000
+			data    0x00000000, 0x00000000
+			data    0x00000000, 0x00000000
+			data    0x00000000, 0x00000000
+
+IMAGEN3:	data    4, 8
+			data    0x01203005, 0x01203005
+			data    0x01203005, 0x01203005
+			data    0x01203005, 0x01203005
+			data    0x01203005, 0x01203005
+
+IMAGEN4:	data	3, 3
+			data	0x01020408,	0x06070901
+			data	0x02
+
+IMAGEN5:	data	3, 3
+			data	0x01020408,	0x06070901
+			data	0x02
+
+IMAGEN6:	data	3, 4
+			data	0x01020408,	0x06070901
+			data	0x02070808
+
+IMAGEN7:	data	3, 4
+			data	0x01020408,	0x06070901
+			data	0x02070808
+
+IMAGEN8:	data	8, 8
+			data	0x01020408,	0x06070901
+			data	0x02070008, 0x06000607
+			data	0x00000000, 0x00000000
+			data	0x06040908, 0x06040905
+			data	0x05060004, 0x00010207
+			data	0x00000000, 0x00000000
+			data	0x00000500, 0x00040000
+			data	0x00040000, 0x03000000
+
+IMAGEN9:	data	8, 8
+			data	0x01020408,	0x06070901
+			data	0x02070008, 0x06000607
+			data	0x00000000, 0x00000000
+			data	0x06040908, 0x06040905
+			data	0x05060004, 0x00010207
+			data	0x00000000, 0x00000000
+			data	0x00000500, 0x00040000
+			data	0x00040000, 0x03000000
+
+IMAGEN10:	data	4, 8
+			data	0x01020400,	0x06070901
+			data	0x02070812, 0x06040607
+			data	0x06040908, 0x06040905
+			data	0x05060304, 0x05010207
+
+IMAGEN11:	data	4, 8
+			data	0x01020402,	0x06070901
+			data	0x02070812, 0x06040607
+			data	0x06040908, 0x06040905
+			data	0x05060304, 0x05010207
+
+IMAGEN12:	data	4, 5
+			data	0x02010304, 0x05040602
+			data	0x10112531,	0x07030201
+			data	0x05010506
+
+IMAGEN13:	data	4, 5
+			data	0x04040304, 0x05020601
+			data	0x10112731,	0x06030201
+			data	0x05010506
+			
+IMAGEN14:	data    3, 3
+			data    0x40302010, 0x80706050, 0x90
+
+IMAGEN15:	data	5, 5
+			data	0x40302010, 0x80706050
+			data	0x05020904, 0x05030405
+			data	0x25154608, 0x02040108
+			data	0x09
+
+IMAGEN16:	data	5,	8
+			data	0x40302010, 0x80706050
+			data	0x05020904, 0x05030405
+			data	0x25154608, 0x02040108
+			data	0x09050153, 0x21506005
+			data	0x05010806, 0x02040601
+
+IMAGEN17:	data 	5, 5
+			data 	0x00000000, 0x20100000
+			data	0x40000030, 0x00006050
+			data	0x00908070, 0x00000000, 0x00
+
+IMAGEN18: 	data 5, 5
+			data 0x44332211, 0x03020155
+			data 0x22210504, 0x31252423
+			data 0x35343332, 0x44434241
+			data 0x00000045	
+
+; @Check
+
+IMAGEN19:   data 4, 8
+			data 0x44444444, 0x44444444
+			data 0x33343444, 0x44444444
+			data 0x44884444, 0x44444444
+			data 0x44444444, 0x44444444
+
+IMAGEN20:   data 4, 8
+			data 0x40414243, 0x44454647
+			data 0x48494A4B, 0x4C4D4E4F
+			data 0x40004243, 0x44454647
+			data 0x48494A4B, 0x4C4D4E4F
+
+; FILTROS
+
+FILTRO1:	data    4, 5, 6
+			data    7, 8, 9
+			data    1, 2, 3
+
+FILTRO2:	data    6, 6, 6
+			data    6, 6, 6
+			data    6, 6, 6
+
+FILTRO3:	data	2, 2, 2
+			data	0, 2, 2
+			data	2, 2, 2
+
+FILTRO4:	data	0, 0, 0
+			data	0, 0, 1
+			data	0, 0, 0
+
+FILTRO5:	data	0, 2, 0
+			data	0, 0, 0
+			data	0, 0, 0
+
+FILTRO6:	data	-2, -2, -2
+			data	-0, -2, -2
+			data	-2, -2, -2
+
+FILTRO7:	data	1, 1, 1
+			data	0, 0, 0
+			data	1, 1, 1	
+
+FILTRO8:	data	0, 0, 0
+			data	0, 1, 0
+			data	0, 0, 0
+
+FILTRO9:	data	0, -2, 0
+			data	0, 0, 0
+			data	0, 0, 0
+
+FILTRO10:	data    1, 1, 1
+			data 	1, 0, 1
+			data 	1, 1, 1
+
+FILTRO11:	data 	1, 1, 1
+			data 	1, -8, 1
+			data 	1, 1, 1
+
+; SUBIMAGEN
+
+SUBIMAGEN:	data    0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF
+SUBIMAGEN1:	data    0x00000000, 0x00000055, 0x00
+SUBIMAGEN2:	data    0x00000000, 0x00005500, 0x00
+SUBIMAGEN3:	data    0x02040608, 0x04060904, 0x03
+
+
+; PRUEBAS
+
+;PPALS para ActualizaFiltro
+PPAL1:	PRUEBA(Dupla, FILTRO1, ActualizaFiltro)
+        stop
+
+PPAL2:	PRUEBA(Dupla2, FILTRO2, ActualizaFiltro)
+		stop
+
+PPAL3:	PRUEBA(Dupla3, FILTRO2, ActualizaFiltro)
+		stop
+
+PPAL4:	PRUEBA(Dupla4, FILTRO2, ActualizaFiltro)
+		stop
+
+PPAL5:	PRUEBA(Dupla5, FILTRO2, ActualizaFiltro)
+		stop
+
+PPAL6:	PRUEBA(Dupla6, FILTRO2, ActualizaFiltro)
+		stop
+
+PPAL7:	PRUEBA(Dupla7, FILTRO2, ActualizaFiltro)
+		stop
+
+;PPALS para Comp	
+PPAL8:	PRUEBA(IMAGEN1, IMAGEN2, Comp)
+		stop
+		
+PPAL9:	PRUEBA(IMAGEN1, IMAGEN3, Comp)
+		stop
+		
+PPAL10: PRUEBA(IMAGEN4, IMAGEN5, Comp)
+		stop
+		
+PPAL11:	PRUEBA(IMAGEN6, IMAGEN7, Comp)
+		stop
+		
+PPAL12:	PRUEBA(IMAGEN8, IMAGEN9, Comp)
+		stop
+		
+PPAL13: PRUEBA(IMAGEN10, IMAGEN11, Comp)
+		stop
+		
+PPAL14: PRUEBA(IMAGEN12, IMAGEN13, Comp)
+		stop
+		
+;Pruebas de nFiltrados
+PPAL15:	PRUEBANF(oper1, nFiltrados)
+		stop
+		
+PPAL16:	PRUEBANF(oper2, nFiltrados)
+		stop
+		
+PPAL17:	PRUEBANF(oper3, nFiltrados)
+		PRUEBANF(oper1, nFiltrados)
+		stop
+		
+PPAL18: PRUEBANF(oper1, nFiltrados)
+		PRUEBANF(oper2, nFiltrados)
+		stop
+		
+PPAL19: PRUEBANF(oper1, nFiltrados)
+		PRUEBANF(oper2, nFiltrados)
+		PRUEBANF(oper4, nFiltrados)
+		stop
+		
+;Pruebas de SubMatriz
+PPAL20:	PRUEBASUBM(IMAGEN14, SUBIMAGEN, __1, __1, SubMatriz)
+		stop
+		
+PPAL21: PRUEBASUBM(IMAGEN14, SUBIMAGEN, __2, __0, SubMatriz)
+		stop
+		
+PPAL22: PRUEBASUBM(IMAGEN14, SUBIMAGEN, __2, __1, SubMatriz)
+		stop
+
+PPAL23: PRUEBASUBM(IMAGEN15, SUBIMAGEN, __2, __1, SubMatriz)
+		stop
+		
+PPAL24: PRUEBASUBM(IMAGEN15, SUBIMAGEN, __4, __4, SubMatriz)
+		stop
+		
+PPAL25: PRUEBASUBM(IMAGEN15, SUBIMAGEN, __2, __0, SubMatriz)
+		stop
+		
+PPAL26: PRUEBASUBM(IMAGEN16, SUBIMAGEN, __2, __4, SubMatriz)
+		stop
+		
+PPAL27: PRUEBASUBM(IMAGEN16, SUBIMAGEN, __4, __7, SubMatriz)
+		stop
+
+;Pruebas de ValorPixel
+PPAL28: PRUEBA(SUBIMAGEN1, FILTRO8, ValorPixel)
+		stop
+		
+PPAL29: PRUEBA(SUBIMAGEN2, FILTRO4, ValorPixel)
+		stop
+		
+PPAL30: PRUEBA(SUBIMAGEN3, FILTRO9, ValorPixel)
+		stop
+		
+PPAL31: PRUEBA(SUBIMAGEN3, FILTRO3, ValorPixel)
+		stop
+
+PPAL32: PRUEBA(SUBIMAGEN3, FILTRO5, ValorPixel)
+		stop
+		
+PPAL33: PRUEBA(SUBIMAGEN3, FILTRO6, ValorPixel)
+		stop
+
+PPAL34: PRUEBA(SUBIMAGEN3, FILTRO7, ValorPixel)
+		stop
+
+; PRUEBAS DE FILPIXEL(*Imagen, i, j, &MFiltro)
+
+PPAL35: PRUEBAFILPXL(IMAGEN18, __2, __3, FILTRO8, FilPixel)
+		stop
+
+PPAL36: PRUEBAFILPXL(IMAGEN19, __2, __2, FILTRO10, FilPixel)	
+		stop
+
+PPAL37: PRUEBAFILPXL(IMAGEN20, __2, __2, FILTRO11, FilPixel)
+		stop
+
+
+
+; ██████╗  ██╗ ██████╗      ██████╗ ██████╗ ██████╗ ██████╗ 
+; ██╔══██╗███║██╔════╝     ██╔════╝██╔═████╗██╔══██╗╚════██╗
+; ██████╔╝╚██║██║  ███╗    ██║     ██║██╔██║██║  ██║ █████╔╝
+; ██╔══██╗ ██║██║   ██║    ██║     ████╔╝██║██║  ██║ ╚═══██╗
+; ██████╔╝ ██║╚██████╔╝    ╚██████╗╚██████╔╝██████╔╝██████╔╝
+; ╚═════╝  ╚═╝ ╚═════╝      ╚═════╝ ╚═════╝ ╚═════╝ ╚═════╝ 
+
+
+;Rutina nFiltrados
+nFiltrados:     cPILA()					; Marco de Pila	
+				ld r20, r31, 8			; r20 <- oper
+				ld r21, r0, 0x0			; r21 <- nF (Podriamos hacer que fuera r29 pero 
+										; esto es mejor para que sea mas legible)
+										; r21 = nFiltrados
+				IF(r20, ge, r0, IF_NF)	; if r20 >= 0 -> if_nf
+				; si no es >= debe ser menor que 0, no hace falta otro if para eso
+				sub r21, r21, 0x1		; oper < 0 => Decrementamos nFiltrados
+				IF(r21, lt, r0, RESET)	; nF < 0 => reset
+				br FIN_NF				; if nF > 0	=> fin_nf
+IF_NF:			or r21, r20, r20		; nFiltrados = oper
+				br FIN_NF				; -> fin_nf
+RESET:			or r21, r0, 0			; nFiltrados (nF) <- 0 (nF < 0)
+FIN_NF:			st r21, r0, 0x0			; nFiltrados -> nF
+				or r29, r21, r21		; return nFiltrados
+				dPILA()					
+				jmp(r1)						
+			
+;Rutina ActualizaFiltro
+; TODO: este r3 va contra nuestras normas, deberia ser r22
+ActualizaFiltro:	cPILA()
+					ld r20, r31, 0x8	; &MFiltro
+					ld r21, r31, 0xC	; &ModMFiltro
+					ld r3, r21, 0x0		; Cargamos numerador
+					ld r4, r21, 0x4		; Denominador;  
+					cmp r5, r3, 0		; if num = 0 => FINAL_AF
+					bb1 eq, r5, FINAL_AF
+					cmp r17, r4, 0		; " con denominador
+					bb1 eq, r17, FINAL_AF;@CleanUp: Cambiar registros para ordenado
+					or r6, r0, 0		; Contador en r6 = 0
+BUCLE_AF:			cmp r5, r6, 9		; if contador = 9 => FINAL_AF
+					bb1 eq, r5, FINAL_AF
+					ld r7, r20, 0		; currElem = &MFiltro
+					muls r7, r7, r3		; currElem = currElem * num
+					divs r7, r7, r4 	; currElem = currElem / den
+					st r7, r20, 0		; currElem -> *MFiltro
+					addu r20, r20, 0x4  ;@info : quizas haya error
+					addu r6, r6, 0x1	; ++contador
+					br BUCLE_AF			; Bucle
+FINAL_AF:			dPILA()
+					jmp(r1)
+					
+
+; Subrutina Comp
+Comp:		cPILA()					; Marco de Pilas
+			; Empezamos en 0x8 por los cambios de la pila
+			; Mirar examenes
+			ld r20, r31, 0x8		; &Imagen1
+			ld r21, r31, 0xC		; &Imagen2
+			ld r4, r20, 0			; rows
+			ld r5, r20, 0x4			; cols
+									; Asumimos que Imagen1 e Imagen2 tienen mismo tamano
+									; y que ni m ni n son negativos
+			mulu r6, r4, r5			; M*N (unsigned)
+			; No vamos a volver a usar las addresses de las imagenes
+			; asi que vamos a usar r20, r21 como currImg1 y currImg2
+			addu r20, r20, 0x8		; currImg1 = &Imagen1 + 0x8
+			addu r21, r21, 0x8		; " con Img2
+			or r14, r0, 0			; diff = 0
+			or r7, r0, 0			; contador = 0
+BUCLE_Cmp:	cmp r8, r7, r6			; Comparamos r7 < r6
+			bb0 lt, r8, FIN_CMP		; if not less than => FIN_CMP
+			ld.bu r9, r20, 0		; *currImg1
+			ld.bu  r10, r21, 0	; *currImg2
+			sub r11, r9, r10		; resImg = currImg1 - currImg2
+			muls r11, r11, r11		; resImg^2
+			add r14, r14, r11		; diff = diff + resImg
+			addu r7, r7, 0x1		; ++contador
+			addu r20, r20, 0x1		; &Imagen1 = &Imagen1 + 0x1
+			addu r21, r21, 0x1		; " pero con Imagen2
+			br BUCLE_Cmp			; Bucle
+FIN_CMP:	divu r14, r14, r6		; diff = diff / MxN
+			or	r29, r14, r14			; r29 <- diff
+			dPILA()
+			jmp(r1)
+
+
+
+
+;RutinaSubMatriz
+SubMatriz:	cPILA()					; Marco de Pila 
+			ld r20, r31, 0x8		; r20 <- Imagen
+			ld r21, r31, 0xC		; r21 <- SubImg
+			ld r22, r31, 0x10		; r22 <- i
+			ld r23, r31, 0x14		; r23 <- j
+			ld r4, r20, 0x0			; r4 <- M
+			ld r5, r20, 0x4			; r5 <- N
+			subu r7, r4, 0x1		; r7 <- M - 1
+			subu r8, r5, 0x1		; r8 <- N - 1
+			addu r20, r20, 0x8		; Apuntamos al primer elemento 
+									; de la imagen
+			addu r6, r0, 0x9		; contador de elementos anadidos
+			; Checks para ir a BORDER
+			IF(r22, eq, r0, BORDER)	; if i == 0 -> BORDER
+			IF(r23, eq, r0, BORDER) ; if j == 0 -> BORDER
+			IF(r22, eq, r7, BORDER)	; if i == M - 1 -> BORDER
+			IF(r23, eq, r8, BORDER) ; if j == N - 1 -> BORDER
+			
+			; Crear Matriz Centrada en I(i, j)
+			subu r9, r22, 0x1		; r9 <- i - 1
+			subu r10, r23, 0x1		; r10 <- j - 1
+			addu r25, r0, r20		; r25 <- &Imagen (Clonamos)
+			; Tenemos que avanzar el puntero a I(i - 1, j - 1)
+			getAt(r9, r5, r10, r25) ; @Check
+			or r12, r0, 0x0			; contador2 = 0 -> 3
+			; Nested Loop
+BUC_SMAT:	ld.bu r13, r25, 0x0		; r13 <- Primer Elemento
+			st.b r13, r21, 0x0		; Primer Elemento -> *SubImg
+			addu r21, r21, 0x1		; *SubImg++ :: Avanzamos al siguiente elem
+			addu r25, r25, 0x1		; *Imagen++ :: Se hace 3 veces (j - 1, j, j + 1)
+			addu r12, r12, 0x1		; contador2++
+			subu r6, r6, 0x1		; contador-- (Contador de 9 elementos)
+			IFNOT(r12, eq, 0x3, BUC_SMAT)	; if contador2 != 3 -> BUC_SMAT
+			or r12, r0, 0x0			; Restauramos contador2 (= 0)
+			addu r9, r9, 0x1
+			addu r25, r0, r20		; Restauramos la Imagen Original en r25
+			getAt(r9, r5, r10, r25) ; r25 <- I(i, j) (j siempre sera j - 1),
+									; el incremento de j se da dentro del bucle 
+									; de forma indirecta al incrementar el puntero
+									; de Imagen 3 veces
+			IF(r6, eq, 0x0, FIN_SMAT); if contador == 0 -> FIN_SMAT
+			br BUC_SMAT				; Pasamos a la siguiente iteracion del bucle
+BORDER:		muls r11, r22, r5		; avanzamos a fila i * N
+			addu r11, r11, r23		; Desplazamos puntero a I(i, j)
+			ld.bu r14, r20, r11		; Cargamos el valor de I(i, j)
+BUC_BORDER: st.b r14, r21, 0x0		; r21 <- *(I(i, j))
+			addu r21, r21, 0x1		; subImg ++
+			DBNZ(r6, BUC_BORDER)	; contador_9 --
+FIN_SMAT:	dPILA()		
+			jmp(r1)
+
+;Subrutina ValorPixel 
+ValorPixel:	cPILA()
+			ld r20, r31, 0x8		; *SubImg
+			ld r21, r31, 0xC		; &MFiltro
+			or r4, r0, 0x0			; ACC = 0
+			addu r5, r0, 0x9		; counter = 9
+buc_vpx:	ld.bu r6, r20, 0x0		; uPixel = *SubImg
+			ld r7, r21, 0x0			; cFiltro = *MFiltro
+			muls r7, r6, r7			; cFilto = uPixel * cFiltro
+			add r4, r4, r7			; Acc <- Acc + cFiltro
+			addu r20, r20, 0x1		; SubImg + 0x1
+			addu r21, r21, 0x4		; MFIltro + 0x4
+			DBNZ(r5, buc_vpx)		; --counter, if counter != 0 continue;
+fin_vpxl: 	or r29, r4, r4			
+			dPILA()
+			jmp(r1)
+
+; Subrutina FilPixel
+
+FilPixel:	cPILA()
+			ld r20, r31, 0x8						; r20 <- &Imagen (26)
+			ld r21, r31, 0xC						; r21 <- i
+			ld r22, r31, 0x10						; r22 <- j
+			ld r26, r31, 0x14						; r26 <- &MFiltro
+			; Normalmente deberia ser r23 pero eso  ; para cargar en memoria, como luego vamos a tener que 
+			; Provoca incompatibilidades con SubMatriz; pushear a pila para llamar a las otras subrutinas, 
+			subu r30, r30, 0xC						; r30 - 0xC
+			or r4, r30, r30							; r4 <- r30 (SubImagen, con su memoria reservada y tal)
+			_func4(SubMatriz, r20, r4, r21, r22)	; Macro para llamar funciones y construir las cosas (40)
+			; En teoria, subimg ya deberia estar bien puesta 
+			or r28, r0, 0x0							; Instruccion a esperar (183/174r) ; @CleanUp
+			_func2(ValorPixel, r4, r26)				; Llamada a ValorPixel 
+			; En teoria, r29 ya tiene el resultado de ValorPixel
+			or r5, r0, 0x0							; Peso = 0 (290)
+			addu r6, r0, 0x9						; i = 9
+Buc_filpxl: ld r7, r26, 0x0							; r7 <- MFiltro[k] ;; k = 9 - i
+			addu r5, r5, r7							; peso <- peso + MFiltro[k]
+			addu r26, r26, 0x4						; Aumentamos el puntero de MFiltro 
+			DBNZ(r6, Buc_filpxl)					; --i ;; if i != 0 => continue
+			IF(r5, eq, 0x0, fpxl_norm)				; if peso = 0 => saltamos este paso
+			divs r29, r29, r5						; r29 = r29 / peso (348)
+fpxl_norm:	IFNOT(r29, lt, 0x0, pxlnorm_hi)			; Normalizamos
+			or r29, r29, 0x0						; if r29 < 0 => r29 = 0; else normalizamos upper bound 255
+pxlnorm_hi: IFNOT(r29, gt, 0xFF, fin_filpxl) 		; if r29 > 255 => r29 = 255; else go to fin_filpxl
+			or r29, r29, 0xFF						; r29 = 255
+fin_filpxl: dPILA()
+			jmp(r1)
+
+
+;Rutina FiltroRecursivo
+;@TODO
+FiltRec:	jmp(r1)
+
+
+
+			
+			
+;Subrutina Filtro
+;@TODO
+Filtro:		jmp(r1)
+
+
+
+
+
+

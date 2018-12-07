@@ -36,7 +36,7 @@ export class MathHelper {
 
     public decToHexBigEndian(str: string) {
 
-        return Texth.addHex(Texth.endianTransform(this.decToHex(str)));
+        return Texth.endianTransform(this.decToHex(str));
     }
 
 }
