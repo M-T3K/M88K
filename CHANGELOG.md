@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to the "m88k" extension will be documented in this file.
 
+## [0.0.6]
+- Fixed a bug that added an extra "0x" when performing decToHex in Big Endian mode.
+- Fixed a bug that made decToHex not work properly with 1 digit numbers.
+- Fixed Syntax Highlighting. It should work now.
+
 ## [0.0.5]
 - Added basic syntax Highlighting.
 

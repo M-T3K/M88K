@@ -13,9 +13,9 @@ This is an attempt to create a fully fledged IDE for the assembly language used 
         - [Text Manipulation Settings](#text-manipulation-settings)
     - [Known Issues](#known-issues)
     - [Release Notes](#release-notes)
+        - [0.0.6 - 07/12/18](#006---071218)
         - [0.0.5 - 07/12/18](#005---071218)
         - [0.0.4 - 07/12/18](#004---071218)
-        - [0.0.3 - 07/12/18](#003---071218)
     - [Credits](#credits)
 
 ## **Features**
@@ -51,16 +51,14 @@ None yet.
 
 Only information about the last 3 updates are here. For more in-depth information, check our [changelog](https://github.com/M-T3K/M88K/blob/master/CHANGELOG.md).
 
+### 0.0.6 - 07/12/18
+- Several bug fixes. 
+- Syntax Highlighting works now !
 ### 0.0.5 - 07/12/18
 - Basic Syntax Highlighting Added
 
 ### 0.0.4 - 07/12/18
 - Updated the Readme. (I forgot, I apologize)
-
-### 0.0.3 - 07/12/18
-
-- Added a Hexadecimal to Decimal and viceversa converter functions as part of the Math Utilities. These are fully accessible through the Text Manipulation Quick Menu.
-- Fixed all bugs encountered.
 
 -----------------------------------------------------------------------------------------------------------
 
