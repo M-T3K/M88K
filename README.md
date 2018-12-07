@@ -16,6 +16,7 @@ This is an attempt to create a fully fledged IDE for the assembly language used 
         - [0.0.3 - 07/12/18](#003---071218)
         - [0.0.2 - 06/12/18](#002---061218)
         - [0.0.1 - 06/12/18](#001---061218)
+    - [Credits](#credits)
 
 ## Features
 
@@ -63,3 +64,9 @@ For more in-depth information, check our [changelog](https://github.com/M-T3K/M8
 - Initial release of M88K. Only **endianTransform** and **addHex** are available.
 
 -----------------------------------------------------------------------------------------------------------
+
+## Credits
+
+I have used existing extensions to learn how to develop Visual Studio Code Extensions. Whereas I didn't copy their code, I did use it as a reference. Thus, I feel like these extensions and their creators deserve some credit.
+
+- [MDTools](https://github.com/Microsoft/vscode-MDTools/)
