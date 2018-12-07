@@ -22,6 +22,11 @@ export class TextHelper {
             endians.push("0x"); 
             last = 2;
         }
+        if(str.length < last + 3) {
+
+            let tmp: string = str.substr(str.length - last - 2, 2);
+            endians.push(tmp);
+        }
         for(let i = str.length - 2; i >= last; i -= 2) {
             
             let tmp:string = str.substr(i, 2);
