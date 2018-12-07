@@ -6,6 +6,7 @@ This is an attempt to create a fully fledged IDE for the assembly language used 
 - [M88K](#m88k)
     - [Table of Contents](#table-of-contents)
     - [Features](#features)
+        - [Syntax Highlighting](#syntax-highlighting)
         - [Text Manipulation](#text-manipulation)
     - [Future Updates](#future-updates)
     - [Extension Settings](#extension-settings)
@@ -19,7 +20,12 @@ This is an attempt to create a fully fledged IDE for the assembly language used 
 
 ## Features
 
-Currently it only offers the following features:
+Currently it offers the following features:
+
+### Syntax Highlighting
+
+An Early form of Syntax Highlighting is available. I'm still working on it. So far it is very basic.
+This is available only on .ens and .asm extensions. If you have another '.asm' extension I recommend that you use '.ens' files. However, you can always configure it inside the Visual Studio Code Settings.
 
 ### Text Manipulation
 
