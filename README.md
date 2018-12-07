@@ -13,9 +13,7 @@ There are other features planned, such as an emulator for this architecture.
 
 ## Extension Settings
 
-This extension contributes the following settings:
-
-* `extension.m88k.textTools`: command that opens a QuickPick menu to perform several of the functions.
+This extension creates the setting `extension.m88k.textTools`, which opens a QuickPick menu to perform several of the text modification functions. It is planned to eventually have a full menu system where one can access different parts of the extension. You will not have to go through the main menu every time. Each of these sub-menus can be bound to a specific keybind.
 
 ## Known Issues
 

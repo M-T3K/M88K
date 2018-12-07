@@ -32,11 +32,12 @@ export function activate(context: vscode.ExtensionContext) {
     let disposable = vscode.commands.registerCommand('extension.m88k.textTools', textTools);
     context.subscriptions.push(disposable);
 }
+//-------------------------------------------------------
 
 function hexToDecimalHandle(editor: TextEditor, doc: TextDocument, S: Selection[]) {
 
     // Only alive for this scope
-	var subOpts: QuickPickOptions = { matchOnDescription: true, placeHolder: "Which mode would you like to use to perform the operation?" };
+	let subOpts: QuickPickOptions = { matchOnDescription: true, placeHolder: "Which mode would you like to use to perform the operation?" };
     let subItems: QuickPickItem[] = [];
     subItems.push({
         label: "LittleEndian",
@@ -79,6 +80,55 @@ function hexToDecimalHandle(editor: TextEditor, doc: TextDocument, S: Selection[
 
     
 }
+//-------------------------------------------------------
+
+function decToHexHandle(editor: TextEditor, doc: TextDocument, S: Selection[]) {
+
+    // Only alive for this scope
+	let subOpts: QuickPickOptions = { matchOnDescription: true, placeHolder: "Which mode would you like to use to perform the operation?" };
+    let subItems: QuickPickItem[] = [];
+    subItems.push({
+        label: "LittleEndian",
+        description: "Performs the Chosen operation in LittleEndian mode." 
+    });
+    subItems.push({
+        label: "BigEndian",
+        description: "Performs the Chosen operation in BigEndian mode." 
+    });
+
+    Window.showQuickPick(subItems).then(selection => {
+
+        if(selection.label === "LittleEndian") {
+
+            editor.edit(function (edit)  {
+
+                for(let i = 0; i < S.length; ++i) {
+
+                    let txt: string = doc.getText(new Range(S[i].start, S[i].end));
+                    edit.replace(S[i], Mathh.decToHex(txt));
+                }
+            });
+        }
+        else if (selection.label === "BigEndian") {
+
+            editor.edit(function (edit)  {
+
+                for(let i = 0; i < S.length; ++i) {
+
+                    let txt: string = doc.getText(new Range(S[i].start, S[i].end));
+                    edit.replace(S[i], Mathh.decToHexBigEndian(txt));
+                }
+            });
+        }
+        else {
+
+            console.log("This should not have occurred.");
+        }
+    });
+
+    
+}
+//-------------------------------------------------------
 
 // Function that we call to modify selected text.
 function textTools() {
@@ -118,6 +168,10 @@ function textTools() {
         label: "hexToDecimal",
         description: "[0xab2] => [2738]" 
     });
+    items.push({
+        label: "decToHex",
+        description: "[2738] => [0xab2]" 
+    });
     
     // Quick Pick Menu as a Promess
     Window.showQuickPick(items).then((selection) => {
@@ -132,7 +186,6 @@ function textTools() {
         switch(selection.label) {
 
             case "endianTransform":
-            
                 editor.edit(function (edit) {
 
                     for(var i = 0; i < S.length; ++i) {
@@ -144,7 +197,6 @@ function textTools() {
                 });
                 break;
             case "addHex":
-
                 editor.edit(function (edit) {
 
                     for(var i = 0; i < S.length; ++i) {
@@ -156,8 +208,10 @@ function textTools() {
                 });
                 break;
             case "hexToDecimal":
-
                 hexToDecimalHandle(editor, doc, S);
+                break;
+            case "decToHex":
+                decToHexHandle(editor, doc, S);
                 break;
             default:
                 // Window.showErrorMessage("This should not have happened.");
@@ -168,7 +222,9 @@ function textTools() {
     });             
 
 }
+//-------------------------------------------------------
 
 // this method is called when your extension is deactivated
 export function deactivate() {
 }
+//-------------------------------------------------------

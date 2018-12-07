@@ -16,8 +16,8 @@ export class MathHelper {
             txt = txt.substr(2);
         }
 
-        let res: number = txt.toLowerCase().split('').reduce( (result, ch) => (result * 16 + HEX.indexOf(ch)), 0);
-        return res.toString();
+        // let res: number = txt.toLowerCase().split('').reduce( (result, ch) => (result * 16 + HEX.indexOf(ch)), 0);
+        return parseInt(txt, 16).toString();
     }
     //--------------------------------------------------------------
  
@@ -25,6 +25,20 @@ export class MathHelper {
 
         return this.hexToDec(Texth.endianTransform(str));
     }
+    //--------------------------------------------------------------
+
+    // Again, we assume the default system to be Little Endian
+    public decToHex(str: string) {
+
+        return Texth.addHex(parseInt(str, 10).toString(16));
+    }
+    //--------------------------------------------------------------
+
+    public decToHexBigEndian(str: string) {
+
+        return Texth.addHex(Texth.endianTransform(this.decToHex(str)));
+    }
+
 }
 //-------------------------------------------------------
 
