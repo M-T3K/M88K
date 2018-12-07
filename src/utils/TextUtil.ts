@@ -3,6 +3,12 @@
 
 export class TextHelper {
     
+
+    public isHexString(str: string) {
+
+        return str.substr(0, 2) === "0x";
+    }
+
     // @opt : This is definetely not the fastest nor more efficient way of accomplishing this.
     // This could be improved through binary shift operations
     public endianTransform(str: string) {
@@ -10,16 +16,15 @@ export class TextHelper {
         var endians: string[] = [];
         
         // We keep the hex in place.
-        var tmp: string = str.substr(0, 2);
         let last = 0;
-        if(tmp === "0x") {
+        if(this.isHexString(str)) {
             
             endians.push("0x"); 
             last = 2;
         }
-        for(var i = str.length - 2; i >= last; i -= 2) {
+        for(let i = str.length - 2; i >= last; i -= 2) {
             
-            tmp = str.substr(i, 2);
+            let tmp:string = str.substr(i, 2);
             endians.push(tmp);        
         }
         return endians.join('');
@@ -38,4 +43,9 @@ export class TextHelper {
 }
 //-------------------------------------------------------
 
+// Maybe it's my C++ kicking in, but this is the right way to do it
+// Essentially we are simulating a singleton without actually going 
+// through all the hastle of making one. I'd rather create one than
+// constantly create new ones.
+export var Texth: TextHelper = new TextHelper();
 

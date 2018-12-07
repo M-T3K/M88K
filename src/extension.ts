@@ -20,8 +20,8 @@ import TextEditor = vscode.TextEditor;
 // Everytime I try to do an import from "@something" it just tells 
 // me that the module cannot be resolved when I run the extension.
 
-import { MathHelper } from "./utils/MathUtil";
-import { TextHelper } from "./utils/TextUtil";
+import { Mathh } from "./utils/MathUtil";
+import { Texth } from "./utils/TextUtil";
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -32,13 +32,6 @@ export function activate(context: vscode.ExtensionContext) {
     let disposable = vscode.commands.registerCommand('extension.m88k.textTools', textTools);
     context.subscriptions.push(disposable);
 }
-
-// // Find out how to put this one in its own file
-// @wip
-// function hexToDec(txt: string) {
-
-//     return "" + parseInt(txt, 16);
-// }
 
 // Function that we call to modify selected text.
 function textTools() {
@@ -55,11 +48,6 @@ function textTools() {
     let doc    = Window.activeTextEditor.document;
     let S      = editor.selections;     // Array w/ selected text (multiple selections included)
     
-    // Helper Objects
-
-    let Texth: TextHelper = new TextHelper();
-    let Mathh: MathHelper = new MathHelper();
-
     // If there's nothing selected
     if(S.length === 0) {
 
@@ -120,8 +108,6 @@ function textTools() {
 
             });
         }    
-
-        // @Wip
         if(selection.label === "hexToDecimal") {
 
             editor.edit(function (edit) {
