@@ -2,22 +2,6 @@
 
 This is an attempt to create a fully fledged IDE for the assembly language used by Motorola 88K family of Microprocessor. So far it does not cover many features but eventually it will have everything that one may need, from Syntax Highlighting to a built-in emulator for this architecture.
 
-## Table of Contents
-- [M88K](#m88k)
-    - [Table of Contents](#table-of-contents)
-    - [**Features**](#features)
-        - [Syntax Highlighting](#syntax-highlighting)
-        - [Text Manipulation](#text-manipulation)
-    - [Future Updates](#future-updates)
-    - [Extension Settings](#extension-settings)
-        - [Text Manipulation Settings](#text-manipulation-settings)
-    - [Known Issues](#known-issues)
-    - [Release Notes](#release-notes)
-        - [0.0.6 - 07/12/18](#006---071218)
-        - [0.0.5 - 07/12/18](#005---071218)
-        - [0.0.4 - 07/12/18](#004---071218)
-    - [Credits](#credits)
-
 ## **Features**
 
 Currently it offers the following features:
