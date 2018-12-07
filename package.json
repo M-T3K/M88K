@@ -26,7 +26,18 @@
                 "title": "Text Tools",
                 "description": "A series of Text Tools & Functionalities to help with the programming in M-88K assembly."
             }
-        ]
+        ],
+        "languages": [{
+            "id": "m88k",
+            "aliases": ["m88k assembly", "m88k"],
+            "extensions": [".ens",".asm"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "m88k",
+            "scopeName": "source.ens",
+            "path": "./src/syntax/m88k.tmLanguage.json"
+        }]
     },
     "scripts": {
         "vscode:prepublish": "npm run compile",
