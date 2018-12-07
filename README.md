@@ -23,6 +23,11 @@ None yet.
 
 ## Release Notes
 
+
+### 0.0.2 - 06/12/18
+
+Fixed some issues regarding package.json
+
 ### 0.0.1 - 06/12/18
 
 Initial release of M88K. Only **endianTransform** and **addHex** are available.
