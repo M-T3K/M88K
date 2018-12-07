@@ -33,6 +33,53 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(disposable);
 }
 
+function hexToDecimalHandle(editor: TextEditor, doc: TextDocument, S: Selection[]) {
+
+    // Only alive for this scope
+	var subOpts: QuickPickOptions = { matchOnDescription: true, placeHolder: "Which mode would you like to use to perform the operation?" };
+    let subItems: QuickPickItem[] = [];
+    subItems.push({
+        label: "LittleEndian",
+        description: "Performs the Chosen operation in LittleEndian mode." 
+    });
+    subItems.push({
+        label: "BigEndian",
+        description: "Performs the Chosen operation in BigEndian mode." 
+    });
+
+    Window.showQuickPick(subItems).then(selection => {
+
+        if(selection.label === "LittleEndian") {
+
+            editor.edit(function (edit)  {
+
+                for(let i = 0; i < S.length; ++i) {
+
+                    let txt: string = doc.getText(new Range(S[i].start, S[i].end));
+                    edit.replace(S[i], Mathh.hexToDec(txt));
+                }
+            });
+        }
+        else if (selection.label === "BigEndian") {
+
+            editor.edit(function (edit)  {
+
+                for(let i = 0; i < S.length; ++i) {
+
+                    let txt: string = doc.getText(new Range(S[i].start, S[i].end));
+                    edit.replace(S[i], Mathh.hexToDecBigEndian(txt));
+                }
+            });
+        }
+        else {
+
+            console.log("This should not have occurred.");
+        }
+    });
+
+    
+}
+
 // Function that we call to modify selected text.
 function textTools() {
 
@@ -81,44 +128,41 @@ function textTools() {
             return;
         }
 
-        // We Convert to Little Endian
+        // Handle Selections of QuickPick menu
+        switch(selection.label) {
 
-        if(selection.label === "endianTransform") {
+            case "endianTransform":
+            
+                editor.edit(function (edit) {
 
-            editor.edit(function (edit) {
+                    for(var i = 0; i < S.length; ++i) {
 
-                for(var i = 0; i < S.length; ++i) {
+                        let txt: string = doc.getText(new Range(S[i].start, S[i].end));
+                        edit.replace(S[i], Texth.endianTransform(txt));
+                    }
+                    
+                });
+                break;
+            case "addHex":
 
-                    let txt: string = doc.getText(new Range(S[i].start, S[i].end));
-                    edit.replace(S[i], Texth.endianTransform(txt));
-                }
+                editor.edit(function (edit) {
 
-            });
+                    for(var i = 0; i < S.length; ++i) {
+                        
+                        let txt: string = doc.getText(new Range(S[i].start, S[i].end));
+                        edit.replace(S[i], Texth.addHex(txt));
+                    }
+                    
+                });
+                break;
+            case "hexToDecimal":
 
-        }   
-        if(selection.label === "addHex") {
-
-            editor.edit(function (edit) {
-
-                for(var i = 0; i < S.length; ++i) {
-
-                    let txt: string = doc.getText(new Range(S[i].start, S[i].end));
-                    edit.replace(S[i], Texth.addHex(txt));
-                }
-
-            });
-        }    
-        if(selection.label === "hexToDecimal") {
-
-            editor.edit(function (edit) {
-
-                for(var i = 0; i < S.length; ++i) {
-
-                    let txt: string = doc.getText(new Range(S[i].start, S[i].end));
-                    edit.replace(S[i], Mathh.hexToDec(txt));
-                }
-            })
-
+                hexToDecimalHandle(editor, doc, S);
+                break;
+            default:
+                // Window.showErrorMessage("This should not have happened.");
+                console.log("This should not have occurred.");
+            break;
         }
 
     });             

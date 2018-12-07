@@ -7,7 +7,7 @@ import { Texth } from "./TextUtil";
 
 export class MathHelper {
     
-    // Converts a Hexadecimal to its decimal value.
+    // We assume that the default is Little Endian (that's the way it is in most modern systems)
     public hexToDec(str: string) {
         
         let txt: string = str;
@@ -16,11 +16,15 @@ export class MathHelper {
             txt = txt.substr(2);
         }
 
-        let res: number = txt.toLowerCase().split('').reduce((result, ch) => (result * 16 + HEX.indexOf(ch)), 0);
+        let res: number = txt.toLowerCase().split('').reduce( (result, ch) => (result * 16 + HEX.indexOf(ch)), 0);
         return res.toString();
     }
     //--------------------------------------------------------------
-    
+ 
+    public hexToDecBigEndian(str: string) {
+
+        return this.hexToDec(Texth.endianTransform(str));
+    }
 }
 //-------------------------------------------------------
 
