@@ -11,6 +11,12 @@ export class MathHelper {
     public hexToDec(str: string) {
         
         let txt: string = str;
+        if(!Texth.isValidString(txt)) {
+
+            return "";
+        }
+
+        txt = str;
         if(Texth.isHexString(str)) {
 
             txt = txt.substr(2);
@@ -23,6 +29,11 @@ export class MathHelper {
  
     public hexToDecBigEndian(str: string) {
 
+        let txt: string = str;
+        if(!Texth.isValidString(txt)) {
+
+            return "";
+        }
         return this.hexToDec(Texth.endianTransform(str));
     }
     //--------------------------------------------------------------
@@ -30,13 +41,23 @@ export class MathHelper {
     // Again, we assume the default system to be Little Endian
     public decToHex(str: string) {
 
+        let txt: string = str;
+        if(!Texth.isValidString(txt)) {
+
+            return "0x";
+        }
         return Texth.addHex(parseInt(str, 10).toString(16));
     }
     //--------------------------------------------------------------
 
     public decToHexBigEndian(str: string) {
 
-        let txt: string = parseInt(str, 10).toString(16);
+        let txt: string = str;
+        if(!Texth.isValidString(txt)) {
+
+            return "0x";
+        }
+        txt = parseInt(str, 10).toString(16);
         return Texth.addHex(Texth.endianTransform(txt));
     }
 

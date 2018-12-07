@@ -4,10 +4,17 @@
 export class TextHelper {
     
 
+    public isValidString(str: string) {
+
+        return str.replace(/\s/g, '').length !== 0;
+    }
+    //--------------------------------------------------------------
+    
     public isHexString(str: string) {
 
         return str.substr(0, 2) === "0x";
     }
+    //--------------------------------------------------------------
 
     // @opt : This is definetely not the fastest nor more efficient way of accomplishing this.
     // This could be improved through binary shift operations
@@ -36,9 +43,6 @@ export class TextHelper {
     }
     //--------------------------------------------------------------
     
-    /**
-    * addHex
-    */
     public addHex(str: string) {
         
         return "0x".concat(str);
