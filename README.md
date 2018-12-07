@@ -8,10 +8,25 @@ This project's objective is to help me with some of the classes I'm taking. Idea
 
 Currently it offers the following features:
 
+### M88K-HK
+Syntax Highlighting is built around the M88K-HK standard for the language (Which I created). This is the specification per-registry for this standard:
+
+- r1 : Register that stores the return address so that you can go back to the previous instruction pointer.
+- r2 & r3 : These registers are both reserved, and are to be used exclusively with MACROs.
+- r4 a r10 : General Variable Registers.
+- r11 a r16 : Registers to perform arithmetic.
+- r17, r18, r19 : Logic registers to be used in comparisons.
+- r20 a r24 : Reserved to be used exclusively to load Subroutine parameters.
+- r25 a r28 : Auxilary Registers that can be used for any purpose whatsoever. 
+- r29 : Reserved register to store the return value if any.
+- r30, r31 : Both Reserved to perform operations with the Stack Pointer.
+
 ### Syntax Highlighting
 
 Syntax Highlighting is available, and almost complete. You need to configure the extension to work with the extension you want from within Visual Studio Code for Syntax highlighting to work. 
 If you have a request, please, comment on the github page.
+
+
 
 ### Text Manipulation
 
