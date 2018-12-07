@@ -12,6 +12,7 @@ This is an attempt to create a fully fledged IDE for the assembly language used 
         - [Text Manipulation Settings](#text-manipulation-settings)
     - [Known Issues](#known-issues)
     - [Release Notes](#release-notes)
+        - [0.0.5 - 07/12/18](#005---071218)
         - [0.0.4 - 07/12/18](#004---071218)
         - [0.0.3 - 07/12/18](#003---071218)
         - [0.0.2 - 06/12/18](#002---061218)
@@ -46,6 +47,9 @@ None yet.
 ## Release Notes
 
 For more in-depth information, check our [changelog](https://github.com/M-T3K/M88K/blob/master/CHANGELOG.md).
+
+### 0.0.5 - 07/12/18
+- Basic Syntax Highlighting Added
 
 ### 0.0.4 - 07/12/18
 - Updated the Readme. (I forgot, I apologize)

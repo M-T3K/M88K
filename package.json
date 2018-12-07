@@ -2,7 +2,7 @@
     "name": "m88k",
     "displayName": "M88K",
     "description": "Sort of an IDE for assembly in Motorola 88k Microprocessors.",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "publisher": "Kiwii",
     "engines": {
         "vscode": "^1.29.0"
@@ -11,6 +11,7 @@
         "Other"
     ],
     "homepage": "https://github.com/M-T3K/M88K/blob/master/README.md",
+    "license": "",
     "repository": {
         "type": "git",
         "url": "https://github.com/M-T3K/M88K"
