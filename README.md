@@ -54,6 +54,7 @@ Only information about the last 3 updates are here. For more in-depth informatio
 ### 0.0.6 - 07/12/18
 - Several bug fixes. 
 - Syntax Highlighting works now !
+
 ### 0.0.5 - 07/12/18
 - Basic Syntax Highlighting Added
 

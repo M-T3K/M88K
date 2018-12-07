@@ -26,7 +26,7 @@
 		"macros": {
 			"patterns": [
 				{
-					"name": "keyword.operator.new",
+					"name": "meta.preprocessor",
 					"match": "(END)?MACRO"
 				}
 			]
@@ -61,33 +61,45 @@
 			"patterns": [
 				{
 					"name": "constant.numeric",
-					"match": "\b-?[0-9.]+\b"
+					"match": "\\b-?[0-9.]+\\b"
 				},
 				
 				{
-					"name": "variable.language",
-					"match": "\br(00|0|01|1|02|2|03|3|29|30|31|)\b"
+					"name": "constant.language",
+					"match": "\\br(00|0|01|1|02|2|03|3|29|30|31)\\b"
 				}
 			]
 		},
 		"storage": {
 			"patterns": [
 				{
-					"name": "storage.type",
-					"match": "\b0x[0-9A-F]+\b"
+					"name": "variable.language",
+					"match": "\\b0x[0-9A-F]+\\b"
 				},
 				{
-					"name": "storage.type",
-					"match": "\br[0-9a-z]{1,2}\b" 
+					"name": "variable.language",
+					"match": "\\br[0-9a-z]{1,2}\\b" 
 				}
 			]
 		},
 		"operator": {
 			"patterns": [
 				{
-					"name": "keyword.control",
-					"match": "\\b(bb0|bb1|cmp|fcmp|br|bsr|jmp|jsr|org|data|res|stop|move|and|xor|or|mask|add|addu|sub|subu|muls|divs|mulu|divu|clr|set|ext|extu|mak|rot|fadd|fsub|fmul|fdiv|fcvt|flt|int|ld|ldcr|st|stcr|xmem|low|high)(.u|.d|.b|.bu|.h|.hu)?\\b"
+					"name": "keyword.operators",
+					"match": "\\b(move|and|xor|or|mask|add|addu|sub|subu|muls|divs|mulu|divu|clr|set|ext|extu|mak|rot|fadd|fsub|fmul|fdiv|fcvt|flt|int|ld|ldcr|st|stcr|xmem|low|high)(.u|.d|.b|.bu|.h|.hu)?\\b"
 				
+				}
+			]
+		},
+		"control": {
+			"patterns": [
+				{
+					"name": "keyword.control",
+					"match": "\\b(bb0|bb1|cmp|fcmp|br|bsr|jmp|jsr|org|data|res|stop)\\b"
+				},
+				{
+					"name": "entity.name.section",
+					"match": "(.*):"
 				}
 			]
 		}
