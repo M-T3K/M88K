@@ -2,7 +2,7 @@
     "name": "m88k",
     "displayName": "M88K",
     "description": "Sort of an IDE for assembly in Motorola 88k Microprocessors.",
-    "version": "0.0.6",
+    "version": "0.1.0",
     "publisher": "Kiwii",
     "engines": {
         "vscode": "^1.29.0"

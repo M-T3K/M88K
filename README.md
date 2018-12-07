@@ -8,11 +8,13 @@ Currently it offers the following features:
 
 ### Syntax Highlighting
 
-An Early form of Syntax Highlighting is available. I'm still working on it. So far it is very basic. You need to configure the extension to work with the extension you want from within Visual Studio Code for Syntax highlighting to work.
+Syntax Highlighting is available, and almost complete. You need to configure the extension to work with the extension you want from within Visual Studio Code for Syntax highlighting to work. 
+If you have a request, please, comment on the github page.
 
 ### Text Manipulation
 
 The following functions manipulate selected text:
+
 - **endianTransform**: Changes the endian mode of a hex number.
 - **addHex**: Adds '0x' at the beginning of a string.
 - **hexToDec**: Converts from Hexadecimal to Decimal. Modes: Little Endian, Big Endian
@@ -35,15 +37,18 @@ None yet.
 
 Only information about the last 3 updates are here. For more in-depth information, check our [changelog](https://github.com/M-T3K/M88K/blob/master/CHANGELOG.md).
 
+### 0.1.0 - 08/12/18
+
+- Syntax Highlighting has been completed. It should work with all custom themes.
+
 ### 0.0.6 - 07/12/18
+
 - Several bug fixes. 
 - Syntax Highlighting works now !
 
 ### 0.0.5 - 07/12/18
-- Basic Syntax Highlighting Added
 
-### 0.0.4 - 07/12/18
-- Updated the Readme. (I forgot, I apologize)
+- Basic Syntax Highlighting Added
 
 -----------------------------------------------------------------------------------------------------------
 
