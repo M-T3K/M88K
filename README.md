@@ -15,8 +15,6 @@ This is an attempt to create a fully fledged IDE for the assembly language used 
         - [0.0.5 - 07/12/18](#005---071218)
         - [0.0.4 - 07/12/18](#004---071218)
         - [0.0.3 - 07/12/18](#003---071218)
-        - [0.0.2 - 06/12/18](#002---061218)
-        - [0.0.1 - 06/12/18](#001---061218)
     - [Credits](#credits)
 
 ## Features
@@ -46,7 +44,7 @@ None yet.
 
 ## Release Notes
 
-For more in-depth information, check our [changelog](https://github.com/M-T3K/M88K/blob/master/CHANGELOG.md).
+Only information about the last 3 updates are here. For more in-depth information, check our [changelog](https://github.com/M-T3K/M88K/blob/master/CHANGELOG.md).
 
 ### 0.0.5 - 07/12/18
 - Basic Syntax Highlighting Added
@@ -58,14 +56,6 @@ For more in-depth information, check our [changelog](https://github.com/M-T3K/M8
 
 - Added a Hexadecimal to Decimal and viceversa converter functions as part of the Math Utilities. These are fully accessible through the Text Manipulation Quick Menu.
 - Fixed all bugs encountered.
-
-### 0.0.2 - 06/12/18
-
-- Fixed some issues regarding package.json
-
-### 0.0.1 - 06/12/18
-
-- Initial release of M88K. Only **endianTransform** and **addHex** are available.
 
 -----------------------------------------------------------------------------------------------------------
 
