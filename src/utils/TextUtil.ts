@@ -4,7 +4,7 @@
 export class TextHelper {
     
 
-    public isValidString(str: string) {
+    public isValidString(str: string)  {
 
         return str.replace(/\s/g, '').length !== 0;
     }
