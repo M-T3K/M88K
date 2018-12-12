@@ -57,7 +57,8 @@ Only information about the last 3 updates are here. For more in-depth informatio
 
 ### 0.1.2 - 12/12/18
 
-- Fixed Commands so that they actually work
+- Fixed Commands so that they actually work.
+- Fixed a bug with Syntax Highlighting's Regex. Now words ending in ':' will be highlighted correctly.
 
 ### 0.1.1 - 09/12/18
 

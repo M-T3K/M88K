@@ -5,6 +5,7 @@ All notable changes to the "m88k" extension will be documented in this file.
 
 - Rewrote Code Structure.
 - FIX: Commands should be fixed. Added 'M88K :: TEST()' command. Should print "Successful Test".
+- Improved Syntax Highlighting.
 
 ## [0.1.1]
 
