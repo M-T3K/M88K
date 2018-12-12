@@ -6,10 +6,19 @@ import Window       = vscode.window;
 import TextEditor   = vscode.TextEditor;
 import TextDocument = vscode.TextDocument;
 
+import { EventEmitter } from "events";
+
 export class Emulator {
 
-    public run() {
+    private sourceFile: string;
+    private sourceCode: string[];
 
+    Emulator(file: string) {
+
+        this.sourceFile = file;
+    }
+
+    public run() {
 
     }
 }

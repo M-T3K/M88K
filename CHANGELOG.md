@@ -1,13 +1,19 @@
 # Change Log
 All notable changes to the "m88k" extension will be documented in this file.
 
+## [0.1.2]
+
+- Rewrote Code Structure.
+- FIX: Commands should be fixed. Added 'M88K :: TEST()' command. Should print "Successful Test".
+
 ## [0.1.1]
 
 - Added the M88K-HK Standard to the readme file.
+- Changed the way commands work.
 
 ## [0.1.0]
 
-- Syntax Highlighting has been completed. It should work with all custom themes. 
+- Syntax Highlighting has been completed. It should work with all custom themes.
 
 ## [0.0.6]
 

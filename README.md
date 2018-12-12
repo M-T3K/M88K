@@ -23,9 +23,8 @@ Syntax Highlighting is built around the M88K-HK standard for the language (Which
 
 ### Syntax Highlighting
 
-Syntax Highlighting is available, and almost complete. You need to configure the extension to work with the extension you want from within Visual Studio Code for Syntax highlighting to work. 
-If you have a request, please, comment on the github page.
-
+- Complete Syntax Highlighting.
+- Accepting requests [@Github](https://github.com/M-T3K/M88K/issues).
 
 
 ### Text Manipulation
@@ -37,8 +36,10 @@ The following functions manipulate selected text:
 - **hexToDec**: Converts from Hexadecimal to Decimal. Modes: Little Endian, Big Endian
 - **decToHex**: Converts from Decimal to Hexadecimal. Modes: Little Endian, Big Endian
 
-## Future Updates
-There are other features planned, such as an emulator for this architecture.
+## Planned Features
+
+- Emulator/Interpreter with built-in debugger. [Currently Working on this]
+- Code Snippets
 
 ## Extension Settings
 
@@ -54,20 +55,20 @@ None yet.
 
 Only information about the last 3 updates are here. For more in-depth information, check our [changelog](https://github.com/M-T3K/M88K/blob/master/CHANGELOG.md).
 
+### 0.1.2 - 12/12/18
+
+- Fixed Commands so that they actually work
+
+### 0.1.1 - 09/12/18
+
+- Added the M88K-HK Standard to the readme file.
+- Changed the way commands work.
+
 ### 0.1.0 - 08/12/18
 
 - Syntax Highlighting has been completed. It should work with all custom themes.
 
-### 0.0.6 - 07/12/18
-
-- Several bug fixes. 
-- Syntax Highlighting works now !
-
-### 0.0.5 - 07/12/18
-
-- Basic Syntax Highlighting Added
-
------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------
 
 ## Credits
 

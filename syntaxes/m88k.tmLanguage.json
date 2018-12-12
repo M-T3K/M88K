@@ -47,7 +47,8 @@
 			"patterns": [
 				{
 					"name": "comment",
-					"match": "((;|^\\*).*$)"	
+					"begin": ";",
+					"end": "\n"
 				}
 			]
 		},
@@ -63,7 +64,6 @@
 					"name": "constant.numeric",
 					"match": "\\b-?[0-9.]+\\b"
 				},
-				
 				{
 					"name": "constant.language",
 					"match": "\\br(00|0|01|1|02|2|03|3|29|30|31)\\b"
@@ -99,7 +99,7 @@
 				},
 				{
 					"name": "entity.name.section",
-					"match": "(.*):"
+					"match": "\\b(.*)\\b:"
 				}
 			]
 		}

@@ -23,7 +23,7 @@ import { textTools } from "./TextTools";
 export function activate(context: vscode.ExtensionContext) {
 
     Commands.registerCommand('extension.m88k.test', () => {
-        Window.showInformationMessage('This is a test');
+        Window.showInformationMessage('Successful Test');
     });
 
     Commands.registerCommand("extension.m88k.textTools", textTools);
