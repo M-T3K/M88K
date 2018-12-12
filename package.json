@@ -53,6 +53,12 @@
                 "scopeName": "source.ens",
                 "path": "./syntaxes/m88k.tmLanguage.json"
             }
+        ],
+        "snippets": [
+            {
+                "language": "m88k",
+                "path": "./snippets/m88k.json"
+            }
         ]
     },
     "scripts": {

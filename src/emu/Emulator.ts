@@ -13,6 +13,10 @@ export class Emulator {
     private sourceFile: string;
     private sourceCode: string[];
 
+    public PC: number;
+    public FL: number;
+    
+
     Emulator(file: string) {
 
         this.sourceFile = file;

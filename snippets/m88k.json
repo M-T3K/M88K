@@ -1,0 +1,166 @@
+{
+    
+    "MACRO": {
+        "prefix": ["m", "mac", "MACRO"],
+        "body": [
+            "$1:\tMACRO(${2:args})",
+            "\t${3:code}",
+            "ENDMACRO"
+        ],
+        "description": "Snippet for a basic Macro"
+    },
+    "subr": {
+        "prefix": ["subr"],
+        "body": [
+            ";${2:comment}",
+            "${1:subr}:\t${3:code}",
+            "\t\tjmp(r1)"
+        ],
+        "description": "Generate initial skeleton for a subroutine"
+    },
+    "_func1": {
+        "prefix": ["f1", "func1", "_func1", "foo1", "_foo1"],
+        "body": [
+            "PUSH(${1:ra})",
+            "bsr ${2:subr}",
+            "POP(${1:ra})"
+        ],
+        "description": "Call to a subroutine with 1 argument using the PUSH & POP Macros."
+    },
+    "_func2": {
+        "prefix": ["f2", "func2", "_func2", "foo2", "_foo2"],
+        "body": [
+            "PUSH(${1:ra})",
+            "PUSH(${2:rb})",
+            "bsr ${3:subr}",
+            "POP(${2:rb})",
+            "POP(${1:ra})"
+        ],
+        "description": "Call to a subroutine with 2 Arguments using the PUSH & POP Macros."
+    },
+    "_func3": {
+        "prefix": ["f3", "func3", "_func3", "foo3", "_foo3"],
+        "body": [
+            "PUSH(${1:ra})",
+            "PUSH(${2:rb})",
+            "PUSH(${3:rc})",
+            "bsr ${4:subr}",
+            "POP(${3:rc})",
+            "POP(${2:rb})",
+            "POP(${1:ra})"
+        ],
+        "description": "Call to a subroutine with 3 Arguments using the PUSH & POP Macros."
+    },
+    "_func4": {
+        "prefix": ["f4", "func4", "_func4", "foo4", "_foo4"],
+        "body": [
+            "PUSH(${1:ra})",
+            "PUSH(${2:rb})",
+            "PUSH(${3:rc})",
+            "PUSH(${4:rd})",
+            "bsr ${5:subr}",
+            "POP(${4:rd})",
+            "POP(${3:rc})",
+            "POP(${2:rb})",
+            "POP(${1:ra})"
+        ],
+        "description": "Call to a subroutine with 4 Arguments using the PUSH & POP Macros."
+    },
+    "_func5": {
+        "prefix": ["f5", "func5", "_func5", "foo5", "_foo5"],
+        "body": [
+            "PUSH(${1:ra})",
+            "PUSH(${2:rb})",
+            "PUSH(${3:rc})",
+            "PUSH(${4:rd})",
+            "PUSH(${5:re})",
+            "bsr ${6:subr}",
+            "POP(${5:re})",
+            "POP(${4:rd})",
+            "POP(${3:rc})",
+            "POP(${2:rb})",
+            "POP(${1:ra})"
+        ],
+        "description": "Call to a subroutine with 5 Arguments using the PUSH & POP Macros."
+    },
+    "Add": {
+        "prefix": ["add"],
+        "body": [
+            "add ${1:ra<-}, ${2:rb+}, ${3:rc}\t;${4:comment}"
+        ],
+        "description": "Add Snippet : ra <- rb + rc     ;COMMENT"
+    },
+    "Add Unsigned": {
+        "prefix": ["addu"],
+        "body": [
+            "addu ${1:ra<-}, ${2:rb+}, ${3:rc}\t;${4:comment}"
+        ],
+        "description": "Add Unsigned Snippet : ra <- rb + rc    ;COMMENT"
+    },
+    "Substract": {
+        "prefix": ["sub"],
+        "body": [
+            "sub ${1:ra<-}, ${2:rb-}, ${3:rc}\t;${4:comment}"
+        ],
+        "description": "Substract Snippet : ra <- rb - rc    ;COMMENT"
+    },
+    "Substract Unsigned": {
+        "prefix": ["subu"],
+        "body": [
+            "subu ${1:ra<-}, ${2:rb-}, ${3:rc}\t;${4:comment}"
+        ],
+        "description": "Substract Unsigned Snippet : ra <- rb - rc    ;COMMENT"
+    },
+    "Multiply": {
+        "prefix": ["muls"],
+        "body": [
+            "muls ${1:ra<-}, ${2:rb*}, ${3:rc}\t;${4:comment}"
+        ],
+        "description": "Multiplication Snippet : ra <- rb * rc    ;COMMENT"
+    },
+    "Multiply Unsigned": {
+        "prefix": ["mulu"],
+        "body": [
+            "mulu ${1:ra<-}, ${2:rb*}, ${3:rc}\t;${4:comment}"
+        ],
+        "description": "Multiplication Unsigned Snippet : ra <- rb * rc    ;COMMENT"
+    },
+    "Division": {
+        "prefix": ["divs"],
+        "body": [
+            "divs ${1:ra<-}, ${2:rb/}, ${3:rc}\t;${4:comment}"
+        ],
+        "description": "Division Snippet : ra <- rb / rc    ;COMMENT"
+    },
+    "Division Unsigned": {
+        "prefix": ["divu"],
+        "body": [
+            "mulu ${1:ra<-}, ${2:rb/}, ${3:rc}\t;${4:comment}"
+        ],
+        "description": "Division Unsigned Snippet : ra <- rb / rc    ;COMMENT"
+    },
+    "Load": {
+        "prefix": ["ld"],
+        "body": [
+            "ld ${1:ra<-}, ${2:*(rb+}, ${3:dir)}\t;${4:comment}"
+        ],
+        "description": "Load Snippet : ra <- *(rb + dir)    ;COMMENT"
+    },
+    "Store": {
+        "prefix": ["st"],
+        "body": [
+            "st ${1:ra->}, ${2:*(rb+}, ${3:dir)}\t;${4:comment}"
+        ],
+        "description": "Store Snippet : ra -> *(rb + dir)    ;COMMENT"
+    },
+    "Or": {
+        "prefix": ["or"],
+        "body": [
+            "or ${1:ra<-}, ${2:rb|}, ${3:rc}\t;${4:comment}"
+        ],
+        "description": "Or Snippet : ra <- rb | rc   ;COMMENT"
+    }
+
+    
+
+}
