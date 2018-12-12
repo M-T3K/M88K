@@ -98,7 +98,7 @@
 					"match": "\\b(bb0|bb1|cmp|fcmp|br|bsr|jmp|jsr|org|data|res|stop)\\b"
 				},
 				{
-					"name": "entity.name.section",
+					"name": "entity.name.tag",
 					"match": "\\b(.*)\\b:"
 				}
 			]
