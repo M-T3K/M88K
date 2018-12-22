@@ -16,6 +16,7 @@ export class TextHelper {
     }
     //--------------------------------------------------------------
 
+
     // @opt : This is definetely not the fastest nor more efficient way of accomplishing this.
     // This could be improved through binary shift operations
     public endianTransform(str: string) {

@@ -26,6 +26,9 @@ Syntax Highlighting is built around the M88K-HK standard for the language (Which
 - Complete Syntax Highlighting.
 - Accepting requests [@Github](https://github.com/M-T3K/M88K/issues).
 
+## Snippets
+
+- Rich Code Snippets available for the most used instructions.
 
 ### Text Manipulation
 
@@ -36,10 +39,13 @@ The following functions manipulate selected text:
 - **hexToDec**: Converts from Hexadecimal to Decimal. Modes: Little Endian, Big Endian
 - **decToHex**: Converts from Decimal to Hexadecimal. Modes: Little Endian, Big Endian
 
-## Planned Features
+## Planned Features / To Do
 
-- Emulator/Interpreter with built-in debugger. [Currently Working on this]
-- Code Snippets
+- Automation: You should be able to just call the command and see an inmediate result without any selections whatsoever.
+- Matrix Generator: Generate Matrices based on input.
+- M88K :: Mode. Instead of having several submenus, use a global endianness mode, that can be switched at any given time.
+- Emulator/Interpreter with built-in debugger: An Emulator/Interpreter with Debugging capabilities.
+- Live error detection.
 
 ## Extension Settings
 
@@ -55,6 +61,10 @@ None yet.
 
 Only information about the last 3 updates are here. For more in-depth information, check our [changelog](https://github.com/M-T3K/M88K/blob/master/CHANGELOG.md).
 
+## [0.2.0] - 12/12/18
+
+- Snippets added.
+
 ### 0.1.2 - 12/12/18
 
 - Fixed Commands so that they actually work.
@@ -64,10 +74,6 @@ Only information about the last 3 updates are here. For more in-depth informatio
 
 - Added the M88K-HK Standard to the readme file.
 - Changed the way commands work.
-
-### 0.1.0 - 08/12/18
-
-- Syntax Highlighting has been completed. It should work with all custom themes.
 
 ---------------------------------------------------------------------------------------------
 

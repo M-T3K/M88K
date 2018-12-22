@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to the "m88k" extension will be documented in this file.
 
+## [0.2.0]
+
+- Snippets added.
+
 ## [0.1.2]
 
 - Rewrote Code Structure.

@@ -13,8 +13,9 @@ export class Emulator {
     private sourceFile: string;
     private sourceCode: string[];
 
-    public PC: number;
-    public FL: number;
+    public PC:  number;
+    public ACC: number;
+    public FL:  number;
     
 
     Emulator(file: string) {

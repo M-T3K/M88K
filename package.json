@@ -2,7 +2,7 @@
     "name": "m88k",
     "displayName": "M88K",
     "description": "Sort of an IDE for assembly in Motorola 88k Microprocessors.",
-    "version": "0.1.2",
+    "version": "0.2.0",
     "publisher": "Kiwii",
     "engines": {
         "vscode": "^1.29.0"
@@ -69,10 +69,10 @@
         "test": "npm run compile && node ./node_modules/vscode/bin/test"
     },
     "devDependencies": {
-        "typescript": "^2.6.1",
-        "vscode": "^1.1.6",
-        "tslint": "^5.8.0",
+        "@types/mocha": "^2.2.42",
         "@types/node": "^7.0.43",
-        "@types/mocha": "^2.2.42"
+        "tslint": "^5.12.0",
+        "typescript": "^2.6.1",
+        "vscode": "^1.1.6"
     }
 }
