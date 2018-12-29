@@ -21,6 +21,19 @@ export class MathHelper {
             txt = txt.substr(2);
         }
 
+        // // Check if negative: Assume 2's Complement
+        if(txt.charAt(0).toUpperCase() === 'F') {
+
+            const tmp: string = txt.substr(1);
+            let min: number = -15 * Math.pow(16, tmp.length);
+            
+            if(tmp.length > 0) {
+                let num: number = parseInt(tmp, 16);
+                min += num;
+            }
+            return min.toString();
+        }
+
         // let res: number = txt.toLowerCase().split('').reduce( (result, ch) => (result * 16 + HEX.indexOf(ch)), 0);
         return parseInt(txt, 16).toString();
     }
