@@ -8,6 +8,7 @@ import TextDocument = vscode.TextDocument;
 
 import { EventEmitter } from "events";
 
+// @Wip : Working on this
 export class Emulator {
 
     private sourceFile: string;

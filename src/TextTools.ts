@@ -13,101 +13,61 @@ import TextEditor = vscode.TextEditor;
 // My Imports
 import { Texth } from "./utils/TextUtil";
 import { Mathh } from "./utils/MathUtil";
+import { mode } from './extension';
 
 
 function hexToDecimalHandle(editor: TextEditor, doc: TextDocument, S: Selection[]) {
 
-    // Only alive for this scope
-	let subOpts: QuickPickOptions = { matchOnDescription: true, placeHolder: "Which mode would you like to use to perform the operation?" };
-    let subItems: QuickPickItem[] = [];
-    subItems.push({
-        label: "LittleEndian",
-        description: "Performs the Chosen operation in LittleEndian mode." 
-    });
-    subItems.push({
-        label: "BigEndian",
-        description: "Performs the Chosen operation in BigEndian mode." 
-    });
+    if(mode === true) {
 
-    Window.showQuickPick(subItems).then(selection => {
+        editor.edit(function (edit)  {
 
-        if(selection.label === "LittleEndian") {
-
-            editor.edit(function (edit)  {
-
-                for(let i = 0; i < S.length; ++i) {
-
-                    let txt: string = doc.getText(new Range(S[i].start, S[i].end));
-                    edit.replace(S[i], Mathh.hexToDec(txt));
-                }
-            });
-        }
-        else if (selection.label === "BigEndian") {
-
-            editor.edit(function (edit)  {
-
-                for(let i = 0; i < S.length; ++i) {
-
-                    let txt: string = doc.getText(new Range(S[i].start, S[i].end));
-                    edit.replace(S[i], Mathh.hexToDecBigEndian(txt));
-                }
-            });
-        }
-        else {
-
-            console.log("This should not have occurred.");
-        }
-    });
-
+            for(let i = 0; i < S.length; ++i) {
     
+                let txt: string = doc.getText(new Range(S[i].start, S[i].end));
+                edit.replace(S[i], Mathh.hexToDec(txt));
+            }
+        });
+    }
+    else {
+        
+        editor.edit(function (edit)  {
+    
+            for(let i = 0; i < S.length; ++i) {
+    
+                let txt: string = doc.getText(new Range(S[i].start, S[i].end));
+                edit.replace(S[i], Mathh.hexToDecBigEndian(txt));
+            }
+        });
+    }
 }
 //-------------------------------------------------------
 
 function decToHexHandle(editor: TextEditor, doc: TextDocument, S: Selection[]) {
 
-    // Only alive for this scope
-	let subOpts: QuickPickOptions = { matchOnDescription: true, placeHolder: "Which mode would you like to use to perform the operation?" };
-    let subItems: QuickPickItem[] = [];
-    subItems.push({
-        label: "LittleEndian",
-        description: "Performs the Chosen operation in LittleEndian mode." 
-    });
-    subItems.push({
-        label: "BigEndian",
-        description: "Performs the Chosen operation in BigEndian mode." 
-    });
+    if(mode === true) {
 
-    Window.showQuickPick(subItems).then(selection => {
 
-        if(selection.label === "LittleEndian") {
-
-            editor.edit(function (edit)  {
-
-                for(let i = 0; i < S.length; ++i) {
-
-                    let txt: string = doc.getText(new Range(S[i].start, S[i].end));
-                    edit.replace(S[i], Mathh.decToHex(txt));
-                }
-            });
-        }
-        else if (selection.label === "BigEndian") {
-
-            editor.edit(function (edit)  {
-
-                for(let i = 0; i < S.length; ++i) {
-
-                    let txt: string = doc.getText(new Range(S[i].start, S[i].end));
-                    edit.replace(S[i], Mathh.decToHexBigEndian(txt));
-                }
-            });
-        }
-        else {
-
-            console.log("This should not have occurred.");
-        }
-    });
-
+        editor.edit(function (edit)  {
     
+            for(let i = 0; i < S.length; ++i) {
+    
+                let txt: string = doc.getText(new Range(S[i].start, S[i].end));
+                edit.replace(S[i], Mathh.decToHex(txt));
+            }
+        });
+    }
+    else {
+
+        editor.edit(function (edit)  {
+
+            for(let i = 0; i < S.length; ++i) {
+    
+                let txt: string = doc.getText(new Range(S[i].start, S[i].end));
+                edit.replace(S[i], Mathh.decToHexBigEndian(txt));
+            }
+        });
+    }
 }
 //-------------------------------------------------------
 
@@ -121,6 +81,7 @@ export function textTools() {
     }
     
     // We prep our variables
+    // @opt these 'let' can probably be 'const'
     let editor = Window.activeTextEditor;
     let doc    = Window.activeTextEditor.document;
     let S      = editor.selections;     // Array w/ selected text (multiple selections included)
@@ -195,7 +156,7 @@ export function textTools() {
                 break;
             default:
                 // Window.showErrorMessage("This should not have happened.");
-                console.log("This should not have occurred.");
+                console.log("Awww man, this shouldn't have happened :/");
             break;
         }
 

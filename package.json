@@ -19,7 +19,8 @@
     "main": "./out/extension",
     "activationEvents": [
         "onCommand:extension.m88k.test",
-        "onCommand:extension.m88k.textTools"
+        "onCommand:extension.m88k.textTools",
+        "onCommand:extension.m88k.changeEndianMode"
     ],
     "contributes": {
         "commands": [
@@ -30,6 +31,10 @@
             {
                 "command": "extension.m88k.textTools",
                 "title": "M88K :: Text Tools"
+            },
+            {
+                "command": "extension.m88k.changeEndianMode",
+                "title": "M88K :: Change Endian Mode"
             }
         ],
         "languages": [
