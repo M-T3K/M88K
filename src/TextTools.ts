@@ -82,9 +82,9 @@ export function textTools() {
     
     // We prep our variables
     // @opt these 'let' can probably be 'const'
-    let editor = Window.activeTextEditor;
-    let doc    = Window.activeTextEditor.document;
-    let S      = editor.selections;     // Array w/ selected text (multiple selections included)
+    const editor = Window.activeTextEditor;
+    const doc    = Window.activeTextEditor.document;
+    const S      = editor.selections;     // Array w/ selected text (multiple selections included)
     
     // If there's nothing selected
     if(S.length === 0) {
@@ -93,10 +93,10 @@ export function textTools() {
     }
 
     // List of possible options in the QuickPick menu
-	var opts: QuickPickOptions = { matchOnDescription: true, placeHolder: "What do you wish to do with the selected text?" };
+	const opts: QuickPickOptions = { matchOnDescription: true, placeHolder: "What do you wish to do with the selected text?" };
     
     // List of Items inside the QuickPick menu
-    var items: QuickPickItem[] = [];
+    let items: QuickPickItem[] = [];
     items.push({
         label: "endianTransform",
         description: "Converts selected text from one Endian to the other Endian." 
@@ -115,7 +115,7 @@ export function textTools() {
     });
     
     // Quick Pick Menu as a Promess
-    Window.showQuickPick(items).then((selection) => {
+    Window.showQuickPick(items, opts).then((selection) => {
 
         // If there's no selection...
         if(!selection) {

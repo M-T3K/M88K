@@ -16,7 +16,6 @@ export class MathHelper {
             return "";
         }
 
-        txt = str;
         if(Texth.isHexString(str)) {
 
             txt = txt.substr(2);
@@ -26,7 +25,7 @@ export class MathHelper {
         return parseInt(txt, 16).toString();
     }
     //--------------------------------------------------------------
- 
+
     public hexToDecBigEndian(str: string) {
 
         let txt: string = str;
@@ -34,11 +33,10 @@ export class MathHelper {
 
             return "";
         }
-        return this.hexToDec(Texth.endianTransform(str));
+        return this.hexToDec(Texth.endianTransform(txt));
     }
     //--------------------------------------------------------------
 
-    // Again, we assume the default system to be Little Endian
     public decToHex(str: string) {
 
         let txt: string = str;
@@ -46,7 +44,7 @@ export class MathHelper {
 
             return "0x";
         }
-        return Texth.addHex(parseInt(str, 10).toString(16));
+        return Texth.addHex(parseInt(txt, 10).toString(16));
     }
     //--------------------------------------------------------------
 
