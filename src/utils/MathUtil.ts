@@ -21,7 +21,7 @@ export class MathHelper {
             txt = txt.substr(2);
         }
 
-        // // Check if negative: Assume 2's Complement
+        // // Check if negative
         if(txt.charAt(0).toUpperCase() === 'F') {
 
             const tmp: string = txt.substr(1);
@@ -57,6 +57,23 @@ export class MathHelper {
 
             return "0x";
         }
+
+        // We check if negative
+        // @Wip I dont know what Im doing
+        if(txt.charAt(0) === '-') {
+            const tmp: string = txt.substr(1);
+            let num: number = parseInt(tmp, 10);
+            let mul: number = ((num - 1) | 15) + 1; // Nearest Multiple of 16
+            let fs: string = "F";
+            let n: number = mul - num;
+            while(mul >= 1) {
+
+                mul /= 16;
+                fs.concat("F");
+            }
+            return Texth.addHex(fs.concat(n.toString(16).concat("0")));
+        }
+
         return Texth.addHex(parseInt(txt, 10).toString(16));
     }
     //--------------------------------------------------------------
