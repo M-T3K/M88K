@@ -1,0 +1,6 @@
+==========================================================
+TODO LIST
+==========================================================
+
+- @TODO: Add Unit Tests (Unit tests work great for small things like this).
+- @Bug: Number Conversion not working with Negative numbers.

@@ -1,0 +1,507 @@
+; This is to check Syntax Highlighting and Snippets.
+; They are mainly the tests for our project (Not our actual project Code)
+
+
+
+; All-Purpose MACROs
+
+; LEA : Load Effective Address
+; rA <- *eti
+LEA:   MACRO(ra, eti)
+    or   ra, r0, low(eti)
+    or.u ra, ra, high(eti) 
+ENDMACRO
+
+; LOAD: Load (Load Effective Address) 
+; rA <- LEA(rA, eti)
+; Basicamente, carga el valor de la direccion obtenida por LEA
+; rA <- *Lea(rA, eti)
+LOAD:   MACRO(ra, eti)
+    LEA(ra, eti)        ; rA <- &eti
+    ld ra, ra, 0        ; rA <- *rA
+ENDMACRO
+
+; DBNZ : Decrement branch not Zero
+; rA <- rA - 1 ; PC <- eti
+DBNZ:   MACRO(ra, eti)
+    sub ra, ra, 1
+    cmp r2, ra, 0
+    bb0 eq, r2, eti          ; bb1 eq, r4, eti should work as well
+ENDMACRO
+
+; SWAP: Swap two registers
+; rA <- rB; rB <- rA
+swap:   MACRO(ra, rb)
+    or r2, ra, ra
+    or ra, rb, rb
+    or rb, r2, r2
+ENDMACRO
+
+; Stack-Related MACROs
+
+; PUSH: Stack basic operation
+; r30 <- r30 - 4 ; r30 <- rA 
+PUSH:   MACRO(ra)
+    subu r30, r30, 4        ; Probably just 1 instruction (st ra, r30, -4)
+    st ra, r30, 0           ; works as well, not sure tho
+ENDMACRO
+
+; POP: Stack basic operation
+; rA <- r30; r30 <- r30 + 4
+POP:    MACRO(ra)
+    ld ra, r30, 0
+    addu r30, r30, 4
+ENDMACRO
+
+; Hi-lvl
+
+; Usamos r2 porque segun nuestro estandar, r2 y r3 no se deben 
+; modificar en ninguna subrutina. Asi garantizamos que estas macros
+; no afecten a ningun resultado.
+IF:			MACRO(ra, condicion, rb, eti)
+			cmp r2, ra, rb
+			bb1 condicion, r2, eti
+ENDMACRO
+IFNOT: 		MACRO(ra, condicion, rb, eti)
+			cmp r2, ra, rb
+			bb0 condicion, r2, eti
+ENDMACRO
+
+
+_func2:		MACRO(subr, arg1, arg2)
+			PUSH(arg2)
+			PUSH(arg1)
+			bsr subr
+			POP(arg1)
+			POP(arg2)
+ENDMACRO
+
+_func4:		MACRO(subr, arg1, arg2, arg3, arg4)
+			PUSH(arg4)
+			PUSH(arg3)
+			PUSH(arg2)
+			PUSH(arg1)
+			bsr subr
+			POP(arg1)
+			POP(arg2)
+			POP(arg3)
+			POP(arg4)
+ENDMACRO
+
+
+; PERSONAL USE MACROS
+; @info: dato1 es la direccion del primer dato (Imagen1, Dupla, etc...)
+; @info: dato2 es la direccion del segundo dato
+; @info: subr es la direccion de branch de la siguiente subrutina
+; @info: No incluye la instruccion del emulador 'stop'
+PRUEBA:     MACRO(dato1, dato2, subr) 
+            LEA(r30, 65000)
+		    LEA(r20, dato2)
+		    LEA(r21, dato1)
+		    _func2(subr, r21, r20)
+ENDMACRO
+
+PRUEBANF:	MACRO(dato, subr)
+			LEA(r30, 65000)
+		    LOAD(r20, dato)
+		    PUSH(r20)
+		    bsr subr
+		    POP(r20)
+ENDMACRO
+
+PRUEBASUBM:	MACRO(img, subm, i, j, subr)
+			LEA(r30, 65000)
+			LOAD(r20, j) 	; Se pasa por valor => LOAD
+			LOAD(r21, i)	; Se pasa por valor => LOAD
+			LEA(r22, subm)	; Se pasa por & => LEA
+			LEA(r23, img)	; Se pasa por & => LEA
+			_func4(subr, r23, r22, r21, r20)
+ENDMACRO
+
+PRUEBAFILPXL:	MACRO(img, i, j, MFiltro, subr)
+				LEA(r30, 65000)
+				LEA(r20, MFiltro)	; r23 <- &MFiltro
+				LOAD(r21, j)		; r22 <- j
+				LOAD(r22, i) 		; r21 <- i
+				LEA(r23, img)		; r20 <- &Imagen
+				_func4(subr, r23, r22, r21, r20)
+ENDMACRO
+
+
+
+; Otros
+
+; @info
+; rows :: la fila en la que esta el elemeto que queremos
+; num_cols :: cantidad de columnas total (elementos por fila)
+; elem :: la columan en la que se encuentra el elem que queremos
+; sz :: tamano de cada elemento (1 byte = 0x1, 4 bytes = 0x4)
+; base :: &primer_elem_matriz
+getAt: 		MACRO(row, N, col, Imagen)
+			muls r2, row, N			; row * N
+			addu r2, r2, col		; row * N + col
+			addu Imagen, Imagen, r2	; &Imagen = &(Imagen + r11)
+ENDMACRO
+
+cPILA:		MACRO()
+			PUSH(r1)
+			PUSH(r31)
+			or r31, r30, r30
+ENDMACRO
+
+dPILA:		MACRO()
+			or r30, r31, r31
+			POP(r31)
+			POP(r1)
+ENDMACRO
+
+
+;Variables
+org 0
+nF:		data	3	; NFILTRADOS
+
+
+; DATOS
+org     0x800
+
+; CONSTANTES
+
+__0:		data 	0	
+__1:		data 	1
+__2:		data 	2
+__3:		data 	3
+__4:		data 	4
+__5:		data 	5
+__6:		data 	6
+__7:		data 	7
+__8:		data 	8
+__9:		data 	9
+__10:		data 	10
+			
+; OPER
+oper1:		data	4
+oper2:		data	-5
+oper3:		data	0
+oper4:		data	2
+
+; DUPLA
+
+Dupla:  	data    1, 2
+Dupla2: 	data	2, 1
+Dupla3: 	data	1,-2
+Dupla4:		data	-1,2
+Dupla5:		data	0,1
+Dupla6:		data	1,0
+Dupla7:		data	-1,-2
+
+
+
+; IMAGEN
+IMAGEN1:	data    4, 8
+			data    0x00000000, 0x00000000
+			data    0x00000000, 0x00002100
+			data    0x00000000, 0x00000000
+			data    0x00000000, 0x00000000
+
+			; 00 00 00 00 | 00 00 00 00
+			; 00 00 00 00 | 00 21 00 00
+			; 00 00 00 00 | 00 00 00 00
+			; 00 00 00 00 | 00 00 00 00
+			
+IMAGEN2:	data    4, 8
+			data    0x00000000, 0x00000000
+			data    0x00000000, 0x00000000
+			data    0x00000000, 0x00000000
+			data    0x00000000, 0x00000000
+
+IMAGEN3:	data    4, 8
+			data    0x01203005, 0x01203005
+			data    0x01203005, 0x01203005
+			data    0x01203005, 0x01203005
+			data    0x01203005, 0x01203005
+
+IMAGEN4:	data	3, 3
+			data	0x01020408,	0x06070901
+			data	0x02
+
+IMAGEN5:	data	3, 3
+			data	0x01020408,	0x06070901
+			data	0x02
+
+IMAGEN6:	data	3, 4
+			data	0x01020408,	0x06070901
+			data	0x02070808
+
+IMAGEN7:	data	3, 4
+			data	0x01020408,	0x06070901
+			data	0x02070808
+
+IMAGEN8:	data	8, 8
+			data	0x01020408,	0x06070901
+			data	0x02070008, 0x06000607
+			data	0x00000000, 0x00000000
+			data	0x06040908, 0x06040905
+			data	0x05060004, 0x00010207
+			data	0x00000000, 0x00000000
+			data	0x00000500, 0x00040000
+			data	0x00040000, 0x03000000
+
+IMAGEN9:	data	8, 8
+			data	0x01020408,	0x06070901
+			data	0x02070008, 0x06000607
+			data	0x00000000, 0x00000000
+			data	0x06040908, 0x06040905
+			data	0x05060004, 0x00010207
+			data	0x00000000, 0x00000000
+			data	0x00000500, 0x00040000
+			data	0x00040000, 0x03000000
+
+IMAGEN10:	data	4, 8
+			data	0x01020400,	0x06070901
+			data	0x02070812, 0x06040607
+			data	0x06040908, 0x06040905
+			data	0x05060304, 0x05010207
+
+IMAGEN11:	data	4, 8
+			data	0x01020402,	0x06070901
+			data	0x02070812, 0x06040607
+			data	0x06040908, 0x06040905
+			data	0x05060304, 0x05010207
+
+IMAGEN12:	data	4, 5
+			data	0x02010304, 0x05040602
+			data	0x10112531,	0x07030201
+			data	0x05010506
+
+IMAGEN13:	data	4, 5
+			data	0x04040304, 0x05020601
+			data	0x10112731,	0x06030201
+			data	0x05010506
+			
+IMAGEN14:	data    3, 3
+			data    0x40302010, 0x80706050, 0x90
+
+IMAGEN15:	data	5, 5
+			data	0x40302010, 0x80706050
+			data	0x05020904, 0x05030405
+			data	0x25154608, 0x02040108
+			data	0x09
+
+IMAGEN16:	data	5,	8
+			data	0x40302010, 0x80706050
+			data	0x05020904, 0x05030405
+			data	0x25154608, 0x02040108
+			data	0x09050153, 0x21506005
+			data	0x05010806, 0x02040601
+
+IMAGEN17:	data 	5, 5
+			data 	0x00000000, 0x20100000
+			data	0x40000030, 0x00006050
+			data	0x00908070, 0x00000000, 0x00
+
+IMAGEN18: 	data 5, 5
+			data 0x44332211, 0x03020155
+			data 0x22210504, 0x31252423
+			data 0x35343332, 0x44434241
+			data 0x00000045	
+
+; @Check
+
+IMAGEN19:   data 4, 8
+			data 0x44444444, 0x44444444
+			data 0x33343444, 0x44444444
+			data 0x44884444, 0x44444444
+			data 0x44444444, 0x44444444
+
+IMAGEN20:   data 4, 8
+			data 0x40414243, 0x44454647
+			data 0x48494A4B, 0x4C4D4E4F
+			data 0x40004243, 0x44454647
+			data 0x48494A4B, 0x4C4D4E4F
+
+; FILTROS
+
+FILTRO1:	data    4, 5, 6
+			data    7, 8, 9
+			data    1, 2, 3
+
+FILTRO2:	data    6, 6, 6
+			data    6, 6, 6
+			data    6, 6, 6
+
+FILTRO3:	data	2, 2, 2
+			data	0, 2, 2
+			data	2, 2, 2
+
+FILTRO4:	data	0, 0, 0
+			data	0, 0, 1
+			data	0, 0, 0
+
+FILTRO5:	data	0, 2, 0
+			data	0, 0, 0
+			data	0, 0, 0
+
+FILTRO6:	data	-2, -2, -2
+			data	-0, -2, -2
+			data	-2, -2, -2
+
+FILTRO7:	data	1, 1, 1
+			data	0, 0, 0
+			data	1, 1, 1	
+
+FILTRO8:	data	0, 0, 0
+			data	0, 1, 0
+			data	0, 0, 0
+
+FILTRO9:	data	0, -2, 0
+			data	0, 0, 0
+			data	0, 0, 0
+
+FILTRO10:	data    1, 1, 1
+			data 	1, 0, 1
+			data 	1, 1, 1
+
+FILTRO11:	data 	1, 1, 1
+			data 	1, -8, 1
+			data 	1, 1, 1
+
+; SUBIMAGEN
+
+SUBIMAGEN:	data    0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF
+SUBIMAGEN1:	data    0x00000000, 0x00000055, 0x00
+SUBIMAGEN2:	data    0x00000000, 0x00005500, 0x00
+SUBIMAGEN3:	data    0x02040608, 0x04060904, 0x03
+
+
+; PRUEBAS
+
+;PPALS para ActualizaFiltro
+PPAL1:	PRUEBA(Dupla, FILTRO1, ActualizaFiltro)
+        stop
+
+PPAL2:	PRUEBA(Dupla2, FILTRO2, ActualizaFiltro)
+		stop
+
+PPAL3:	PRUEBA(Dupla3, FILTRO2, ActualizaFiltro)
+		stop
+
+PPAL4:	PRUEBA(Dupla4, FILTRO2, ActualizaFiltro)
+		stop
+
+PPAL5:	PRUEBA(Dupla5, FILTRO2, ActualizaFiltro)
+		stop
+
+PPAL6:	PRUEBA(Dupla6, FILTRO2, ActualizaFiltro)
+		stop
+
+PPAL7:	PRUEBA(Dupla7, FILTRO2, ActualizaFiltro)
+		stop
+
+;PPALS para Comp	
+PPAL8:	PRUEBA(IMAGEN1, IMAGEN2, Comp)
+		stop
+		
+PPAL9:	PRUEBA(IMAGEN1, IMAGEN3, Comp)
+		stop
+		
+PPAL10: PRUEBA(IMAGEN4, IMAGEN5, Comp)
+		stop
+		
+PPAL11:	PRUEBA(IMAGEN6, IMAGEN7, Comp)
+		stop
+		
+PPAL12:	PRUEBA(IMAGEN8, IMAGEN9, Comp)
+		stop
+		
+PPAL13: PRUEBA(IMAGEN10, IMAGEN11, Comp)
+		stop
+		
+PPAL14: PRUEBA(IMAGEN12, IMAGEN13, Comp)
+		stop
+		
+;Pruebas de nFiltrados
+PPAL15:	PRUEBANF(oper1, nFiltrados)
+		stop
+		
+PPAL16:	PRUEBANF(oper2, nFiltrados)
+		stop
+		
+PPAL17:	PRUEBANF(oper3, nFiltrados)
+		PRUEBANF(oper1, nFiltrados)
+		stop
+		
+PPAL18: PRUEBANF(oper1, nFiltrados)
+		PRUEBANF(oper2, nFiltrados)
+		stop
+		
+PPAL19: PRUEBANF(oper1, nFiltrados)
+		PRUEBANF(oper2, nFiltrados)
+		PRUEBANF(oper4, nFiltrados)
+		stop
+		
+;Pruebas de SubMatriz
+PPAL20:	PRUEBASUBM(IMAGEN14, SUBIMAGEN, __1, __1, SubMatriz)
+		stop
+		
+PPAL21: PRUEBASUBM(IMAGEN14, SUBIMAGEN, __2, __0, SubMatriz)
+		stop
+		
+PPAL22: PRUEBASUBM(IMAGEN14, SUBIMAGEN, __2, __1, SubMatriz)
+		stop
+
+PPAL23: PRUEBASUBM(IMAGEN15, SUBIMAGEN, __2, __1, SubMatriz)
+		stop
+		
+PPAL24: PRUEBASUBM(IMAGEN15, SUBIMAGEN, __4, __4, SubMatriz)
+		stop
+		
+PPAL25: PRUEBASUBM(IMAGEN15, SUBIMAGEN, __2, __0, SubMatriz)
+		stop
+		
+PPAL26: PRUEBASUBM(IMAGEN16, SUBIMAGEN, __2, __4, SubMatriz)
+		stop
+		
+PPAL27: PRUEBASUBM(IMAGEN16, SUBIMAGEN, __4, __7, SubMatriz)
+		stop
+
+;Pruebas de ValorPixel
+PPAL28: PRUEBA(SUBIMAGEN1, FILTRO8, ValorPixel)
+		stop
+		
+PPAL29: PRUEBA(SUBIMAGEN2, FILTRO4, ValorPixel)
+		stop
+		
+PPAL30: PRUEBA(SUBIMAGEN3, FILTRO9, ValorPixel)
+		stop
+		
+PPAL31: PRUEBA(SUBIMAGEN3, FILTRO3, ValorPixel)
+		stop
+
+PPAL32: PRUEBA(SUBIMAGEN3, FILTRO5, ValorPixel)
+		stop
+		
+PPAL33: PRUEBA(SUBIMAGEN3, FILTRO6, ValorPixel)
+		stop
+
+PPAL34: PRUEBA(SUBIMAGEN3, FILTRO7, ValorPixel)
+		stop
+
+; PRUEBAS DE FILPIXEL(*Imagen, i, j, &MFiltro)
+
+PPAL35: PRUEBAFILPXL(IMAGEN18, __2, __3, FILTRO8, FilPixel)
+		stop
+
+PPAL36: PRUEBAFILPXL(IMAGEN19, __2, __2, FILTRO10, FilPixel)	
+		stop
+
+PPAL37: PRUEBAFILPXL(IMAGEN20, __2, __2, FILTRO11, FilPixel)
+		stop
+
+
+
+; ██████╗  ██╗ ██████╗      ██████╗ ██████╗ ██████╗ ██████╗ 
+; ██╔══██╗███║██╔════╝     ██╔════╝██╔═████╗██╔══██╗╚════██╗
+; ██████╔╝╚██║██║  ███╗    ██║     ██║██╔██║██║  ██║ █████╔╝
+; ██╔══██╗ ██║██║   ██║    ██║     ████╔╝██║██║  ██║ ╚═══██╗
+; ██████╔╝ ██║╚██████╔╝    ╚██████╗╚██████╔╝██████╔╝██████╔╝
+; ╚═════╝  ╚═╝ ╚═════╝      ╚═════╝ ╚═════╝ ╚═════╝ ╚═════╝ 
