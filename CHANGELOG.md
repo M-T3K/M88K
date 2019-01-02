@@ -1,6 +1,12 @@
 # Change Log
 All notable changes to the "m88k" extension will be documented in this file.
 
+## [0.3.0] - 02/01/2019
+
+- Happy New Year. =)
+- Added a Global Endian Mode. Now, instead of having to go through an additional submenu, all operations use this mode. This should make the extension much more user-friendly and VSCode-like.
+- Encountered a bug with conversion functions: Negative number conversion does not work well.
+
 ## [0.2.0]
 
 - Snippets added.

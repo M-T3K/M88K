@@ -9,6 +9,7 @@ This project's objective is to help me with some of the classes I'm taking. Idea
 Currently it offers the following features:
 
 ### M88K-HK
+
 Syntax Highlighting is built around the M88K-HK standard for the language (Which I created). This is the specification per-registry for this standard:
 
 - r1 : Register that stores the return address so that you can go back to the previous instruction pointer.
@@ -26,7 +27,7 @@ Syntax Highlighting is built around the M88K-HK standard for the language (Which
 - Complete Syntax Highlighting.
 - Accepting requests [@Github](https://github.com/M-T3K/M88K/issues).
 
-## Snippets
+### Snippets
 
 - Rich Code Snippets available for the most used instructions.
 
@@ -36,32 +37,41 @@ The following functions manipulate selected text:
 
 - **endianTransform**: Changes the endian mode of a hex number.
 - **addHex**: Adds '0x' at the beginning of a string.
-- **hexToDec**: Converts from Hexadecimal to Decimal. Modes: Little Endian, Big Endian
-- **decToHex**: Converts from Decimal to Hexadecimal. Modes: Little Endian, Big Endian
+- **hexToDec**: Converts from Hexadecimal to Decimal.
+- **decToHex**: Converts from Decimal to Hexadecimal.
+
+### Global Endianness Mode
+
+This extension supports Big Endian and Little Endian modes at the Global Scope. This means that all operations that require a specific mode use this setting to perform the operation.
 
 ## Planned Features / To Do
 
 - Automation: You should be able to just call the command and see an inmediate result without any selections whatsoever.
 - Matrix Generator: Generate Matrices based on input.
-- M88K :: Mode. Instead of having several submenus, use a global endianness mode, that can be switched at any given time.
 - Emulator/Interpreter with built-in debugger: An Emulator/Interpreter with Debugging capabilities.
-- Live error detection.
+- Live Syntax Error Detection.
 
 ## Extension Settings
 
 ### Text Manipulation Settings
 
-This extension creates the setting `extension.m88k.textTools`, which opens a QuickPick menu to perform several of the text modification functions. It is planned to eventually have a full menu system where one can access different parts of the extension. You will not have to go through the main menu every time. Each of these sub-menus can be bound to a specific keybind.
+This extension creates the setting `extension.m88k.textTools`, which opens a QuickPick menu to perform several of the text modification functions.
 
 ## Known Issues
 
-None yet.
+- Conversion functions do not work properly with negative numbers.
 
 ## Release Notes
 
 Only information about the last 3 updates are here. For more in-depth information, check our [changelog](https://github.com/M-T3K/M88K/blob/master/CHANGELOG.md).
 
-## [0.2.0] - 12/12/18
+### [0.3.0] - 02/01/2019
+
+- Happy New Year. =)
+- Added a Global Endian Mode. Now, instead of having to go through an additional submenu, all operations use this mode. This should make the extension much more user-friendly and VSCode-like.
+- Encountered a bug with conversion functions: Negative number conversion does not work well.
+
+### [0.2.0] - 12/12/18
 
 - Snippets added.
 
@@ -70,15 +80,9 @@ Only information about the last 3 updates are here. For more in-depth informatio
 - Fixed Commands so that they actually work.
 - Fixed a bug with Syntax Highlighting's Regex. Now words ending in ':' will be highlighted correctly.
 
-### 0.1.1 - 09/12/18
-
-- Added the M88K-HK Standard to the readme file.
-- Changed the way commands work.
 
 ---------------------------------------------------------------------------------------------
 
 ## Credits
 
-I have used existing extensions to learn how to develop Visual Studio Code Extensions. Whereas I didn't copy their code, I did use it as a reference. Thus, I feel like these extensions and their creators deserve some credit.
-
-- [MDTools](https://github.com/Microsoft/vscode-MDTools/)
+Originally I started only using [MDTools](https://github.com/Microsoft/vscode-MDTools/) as a starting point. However, by now I've taken a look at all the example extensions by the Visual Studio Code Team.
