@@ -81,7 +81,6 @@ export function textTools() {
     }
     
     // We prep our variables
-    // @opt these 'let' can probably be 'const'
     const editor = Window.activeTextEditor;
     const doc    = Window.activeTextEditor.document;
     const S      = editor.selections;     // Array w/ selected text (multiple selections included)
@@ -129,7 +128,7 @@ export function textTools() {
             case "endianTransform":
                 editor.edit(function (edit) {
 
-                    for(var i = 0; i < S.length; ++i) {
+                    for(let i = 0; i < S.length; ++i) {
 
                         let txt: string = doc.getText(new Range(S[i].start, S[i].end));
                         edit.replace(S[i], Texth.endianTransform(txt));
@@ -140,7 +139,7 @@ export function textTools() {
             case "addHex":
                 editor.edit(function (edit) {
 
-                    for(var i = 0; i < S.length; ++i) {
+                    for(let i = 0; i < S.length; ++i) {
                         
                         let txt: string = doc.getText(new Range(S[i].start, S[i].end));
                         edit.replace(S[i], Texth.addHex(txt));
@@ -155,7 +154,6 @@ export function textTools() {
                 decToHexHandle(editor, doc, S);
                 break;
             default:
-                // Window.showErrorMessage("This should not have happened.");
                 console.log("Awww man, this shouldn't have happened :/");
             break;
         }

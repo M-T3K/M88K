@@ -16,14 +16,6 @@ import Workspace          = vscode.workspace;
 
 // My Imports
 import { textTools } from "./TextTools";
-// import { Emulator } from "./emu/Emulator";
-
-// function emulate() {
-
-    // var emu = new Emulator();
-    // Do the emulator stuff
-
-// }
 
 export var mode: boolean;   // Endian mode, true => Little Endian | false => Big Endian
 let statusBarItem: vscode.StatusBarItem = null;
@@ -67,14 +59,12 @@ export function changeMode() {
 
 export function activate(context: vscode.ExtensionContext) {
 
-    // @Check : This is inconsistent (Arrow functions and normal functions being used)
-    Commands.registerCommand('extension.m88k.test', () => {
+    Commands.registerCommand('extension.m88k.test', function() {
         Window.showInformationMessage('Successful Test');
     });
 
     Commands.registerCommand("extension.m88k.textTools", textTools);
     Commands.registerCommand("extension.m88k.changeEndianMode", changeMode);
-    // Commands.registerCommand("m88k.launchEmulator", emulate);
 
     loadMode(); // On Activation, we Load the Mode from settings.
     

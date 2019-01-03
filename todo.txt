@@ -13,6 +13,10 @@ Annotations:
 TODO LIST
 ==========================================================
 
+- @Feature: Spanish Language Support: since most of the community that will be 
+  using this extension, I think it would be a good idea to have native Spanish 
+  support linked to either the language of the editor itself or a separate setting
+  for the extension.
 - @Feature: Automatic Selection (If nothing is selected then the 
   extension should automatically select up to the previous whitespace char).
 - @Feature: Matrix Generation (with specified dimensions, and support for random

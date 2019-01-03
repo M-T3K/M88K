@@ -27,7 +27,7 @@ export class TextHelper {
     // This could be improved through binary shift operations
     public endianTransform(str: string): string {
         
-        var endians: string[] = [];
+        let endians: string[] = [];
         
         if(!Texth.isValidString(str)) {
 

@@ -6,7 +6,9 @@ This project's objective is to help me with some of the classes I'm taking. Idea
 
 Most of the features are tested using Mocha Unit Testing and should work as expected. If this is not the case, please refer to the **Known Issues** Section.
 
-## **Features**
+Version 0.5.0 has a lot of changes. I'm not going to be actively working on this extension anymore (So I won't push as many updates) due to lack of free time. It is expected that by version 0.9.0 every task in the todo list (except bug fixing) will be done, and 1.0.0 will simply be a bug fixing update to ensure that the extension works properly, and that it has as few bugs as possible. Ideally, by June 2019, we will have reached version 1.0.0, and I will consider this completed.
+
+## Features
 
 Currently it offers the following features:
 
@@ -47,6 +49,7 @@ This extension supports Big Endian and Little Endian modes at the Global Scope. 
 
 ## Planned Features / To Do
 
+- Spanish Language Support: since most of the community that will be using this extension, I think it would be a good idea to have native Spanish support linked to either the language of the editor itself or a separate setting for the extension.
 - Automation: You should be able to just call the command and see an inmediate result without any selections whatsoever.
 - Matrix Generator: Generate Matrices based on input with support for random numbers.
 - Instruction Counter: Counts all the instructions in a file.
@@ -61,7 +64,7 @@ This extension creates the setting `m88k.defaultEndianMode` to specify the defau
 
 ## Known Issues
 
-As of version 0.3.0 I have fixed all bugs/issues that I was aware of. If you encounter any bugs or glitches, or have any suggestions, please, tell me. I'm accepting requests [@Github](https://github.com/M-T3K/M88K/issues)
+As of version 0.5.0 I have fixed all bugs/issues that I was aware of. I've tried to improve the quality of the code itself to ensure that it is faster, more maintanable, and of higher quality. If you encounter any bugs or glitches, or have any suggestions, please, tell me. I'm accepting requests [@Github](https://github.com/M-T3K/M88K/issues)
 
 ## Release Notes
 
@@ -69,9 +72,9 @@ Only information about the last 3 updates are here. For more in-depth informatio
 
 ## Contributing
 
-If you are looking to contribute, feel free to submit a Pull Request to the Repository on [Github](https://github.com/M-T3K/M88K/pulls). You should also check our [TO-DO list]().
+If you are looking to contribute, feel free to submit a Pull Request to the Repository on [Github](https://github.com/M-T3K/M88K/pulls). You should also check our [TO-DO list](https://github.com/M-T3K/M88K/blob/master/todo.txt).
 
-### [0.3.0] - 03/01/2019
+### [0.5.0] - 03/01/2019
 
 - Happy New Year. =)
 - Added a Global Endian Mode. Now, instead of having to go through an additional submenu, all operations use this mode. This should make the extension much more user-friendly and VSCode-like. There is also a setting to select the default mode the extension uses (`m88k.defaultEndianMode`).

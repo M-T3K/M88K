@@ -4,14 +4,16 @@
 import { Texth } from "./TextUtil";
 
 // Constants
-const HEX: string = "0123456789abcdef"; // All the possible values of a Hexadecimal Number
-const MAX_HEX_32: number = 0xFFFFFFFF;  // Max Value of an unsigned 32 big Integer.
+export const HEX: string = "0123456789abcdef"; // All the possible values of a Hexadecimal Number
+export const UINT_MAX_HEX_32: number = 0xFFFFFFFF;  // Max Value of an unsigned 32 big Integer.
+
+// Class
 export class MathHelper {
     
     private negDecToHex(str: string): string {
         
         let num: number = parseInt(str.substr(1), 10);
-        num = MAX_HEX_32 - num;
+        num = UINT_MAX_HEX_32 - num;
         // Due to how 2's complement works, we need to + 1
         num++;
 
@@ -52,7 +54,7 @@ export class MathHelper {
 
         if(neg) {
             let num: number = parseInt(Texth.endianTransform(txt), 16);
-            num = MAX_HEX_32 - num + 1; 
+            num = UINT_MAX_HEX_32 - num + 1; 
             num *= -1;
             return num.toString(10);
         }
@@ -86,7 +88,7 @@ export class MathHelper {
 
         if(neg) {
             let num: number = parseInt(txt, 16);
-            num = MAX_HEX_32 - num + 1; 
+            num = UINT_MAX_HEX_32 - num + 1; 
             num *= -1;
             return num.toString(10);
         }
@@ -108,7 +110,7 @@ export class MathHelper {
             return Texth.endianTransform(this.negDecToHex(txt));
         }
 
-        let num: number = parseInt(txt, 10);
+        const num: number = parseInt(txt, 10);
 
         return Texth.addHex(num.toString(16).toUpperCase()); 
     }
@@ -128,7 +130,7 @@ export class MathHelper {
             return this.negDecToHex(txt);
         }
 
-        let num: number = parseInt(txt, 10);
+        const num: number = parseInt(txt, 10);
 
         return Texth.endianTransform(Texth.addHex(num.toString(16).toUpperCase()));
     }
