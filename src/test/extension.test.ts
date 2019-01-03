@@ -112,4 +112,40 @@ suite("Math Helper Tests", () => {
     test("Test::-Dec->Hex::10", () => {
         assert.strictEqual( Mathh.decToHex("-11259375"), "0x113254FF");
     });
+
+    // Hex to Dec
+
+    test("Test::Hex->Dec::1", () => {
+        assert.strictEqual( Mathh.hexToDec("0x1"), "1");
+    });
+    test("Test::Hex->Dec::2", () => {
+        assert.strictEqual( Mathh.hexToDec("0xA"), "10");
+    });
+    test("Test::Hex->Dec::3", () => {
+        assert.strictEqual( Mathh.hexToDec("0x17"), "23");
+    });
+    test("Test::Hex->Dec::4", () => {
+        assert.strictEqual( Mathh.hexToDec("0xF00"), "3840");
+    });
+    test("Test::Hex->Dec::5", () => {
+        assert.strictEqual( Mathh.hexToDec("0xABCDEF"), "11259375");
+    });
+
+    //  Negative Hex to Dec
+    test("Test::-Hex->Dec::6", () => {
+        assert.strictEqual( Mathh.hexToDec("-0xFFFFFFFF"), "-1");
+    });
+    test("Test::-Hex->Dec::7", () => {
+        assert.strictEqual( Mathh.hexToDec("-0xF6FFFFFF"), "-10");
+    });
+    test("Test::-Hex->Dec::8", () => {
+        assert.strictEqual( Mathh.hexToDec("-0xE9FFFFFF"), "-23");
+    });
+    test("Test::-Hex->Dec::9", () => {
+        assert.strictEqual( Mathh.hexToDec("-0x00F1FFFF"), "-3840");
+    });
+    test("Test::-Hex->Dec::10", () => {
+        assert.strictEqual( Mathh.hexToDec("-0x113254FF"), "-11259375");
+    });
+
 });

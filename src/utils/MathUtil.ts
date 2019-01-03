@@ -5,14 +5,13 @@ import { Texth } from "./TextUtil";
 
 // Constants
 const HEX: string = "0123456789abcdef"; // All the possible values of a Hexadecimal Number
-
+const MAX_HEX_32: number = 0xFFFFFFFF;  // Max Value of an unsigned 32 big Integer.
 export class MathHelper {
     
     private negDecToHex(str: string) {
         
         let num: number = parseInt(str.substr(1), 10);
-        let maxHex: number = 0xFFFFFFFF;
-        num = maxHex - num;
+        num = MAX_HEX_32 - num;
         // Due to how 2's complement works, we need to + 1
         num++;
 
@@ -25,44 +24,70 @@ export class MathHelper {
     // We assume that the default is Little Endian (that's the way it is in most modern systems)
     public hexToDec(str: string) {
         
-        let txt: string = str;
-        if(!Texth.isValidString(txt)) {
+        let txt: string  = str;
+        let neg: boolean = false;
 
+        if(!Texth.isValidString(txt)) {
             return "";
         }
 
-        if(Texth.isHexString(str)) {
+        if(txt.charAt(0) === '-') {
+            neg = true;
+            txt = txt.substr(1);
+        }
 
+        if(Texth.isHexString(txt)) {
             txt = txt.substr(2);
         }
 
-        // Check if negative
-        // @WIP This is not actually correct.
-        // if(txt.charAt(0).toUpperCase() === 'F') {
+        // @info Aight, so this is the issue
+        // it is impossible to check if a number is negative consistently 
+        // without an implicit '-' sign, unless it is written in binary
+        // where the sign is the first bit of the first byte. 
+        // With other bases, this works for all numbers that can be expressed 
+        // within a multiple of 4 bytes.
+        // Thus, we are explicitly checking for a negative sign.
 
-        //     const tmp: string = txt.substr(1);
-        //     let min: number = -15 * Math.pow(16, tmp.length);
-            
-        //     if(tmp.length > 0) {
-        //         let num: number = parseInt(tmp, 16);
-        //         min += num;
-        //     }
-        //     return min.toString();
-        // }
+        if(neg) {
+            let num: number = parseInt(Texth.endianTransform(txt), 16);
+            num = MAX_HEX_32 - num + 1; 
+            num *= -1;
+            return num.toString(10);
+        }
 
-        // let res: number = txt.toLowerCase().split('').reduce( (result, ch) => (result * 16 + HEX.indexOf(ch)), 0);
         return parseInt(txt, 16).toString();
     }
     //--------------------------------------------------------------
 
     public hexToDecBigEndian(str: string) {
 
-        let txt: string = str;
-        if(!Texth.isValidString(txt)) {
+        let txt: string  = str;
+        let neg: boolean = false;
 
+        if(!Texth.isValidString(txt)) {
             return "";
         }
-        return this.hexToDec(Texth.endianTransform(txt));
+
+        if(txt.charAt(0) === '-') {
+            neg = true;
+            txt = txt.substr(1);
+        }
+
+        if(Texth.isHexString(txt)) {
+            txt = txt.substr(2);
+        }
+
+        // @CleanUp: This code is repetitive. Maybe we could find a way to avoid 
+        // repetition in this code.
+
+        if(neg) {
+            let num: number = parseInt(txt, 16);
+            num = MAX_HEX_32 - num + 1; 
+            num *= -1;
+            return num.toString(10);
+        }
+
+        return parseInt(txt, 16).toString();
     }
     //--------------------------------------------------------------
 

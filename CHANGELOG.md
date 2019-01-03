@@ -1,11 +1,17 @@
 # Change Log
 All notable changes to the "m88k" extension will be documented in this file.
 
-## [0.3.0] - 02/01/2019
+## [0.3.0] - 03/01/2019
 
 - Happy New Year. =)
 - Added a Global Endian Mode. Now, instead of having to go through an additional submenu, all operations use this mode. This should make the extension much more user-friendly and VSCode-like.
 - Encountered a bug with conversion functions: Negative number conversion does not work well.
+- Removed '.asm' from the list of valid language extensions.
+- Changed Language Name from m88k assembly to M88K.
+- Added an activation event so that the extension automatically activates when the language
+    is M88K.
+- Added Unit Testing to quickly test small functions and prevent bugs.
+- General Refactoring of the project's structure.
 
 ## [0.2.0]
 
