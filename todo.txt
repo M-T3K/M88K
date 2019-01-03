@@ -13,8 +13,11 @@ Annotations:
 TODO LIST
 ==========================================================
 
-- @Feature: Add Setting for Endianness Mode (So that it stays 
-  consistent with what the user wants, specified in settings.json)
+- @Feature: Automatic Selection (If nothing is selected then the 
+  extension should automatically select up to the previous whitespace char).
+- @Feature: Matrix Generation (with specified dimensions, and support for random
+  as well as specified numbers.)
+- @Feature: Instruction Count.
 - @Feature: Add Intellisense (Auto-complete / suggestions)
 - @Feature: Emulator.
 - @Feature: Debugging Support.
@@ -22,8 +25,14 @@ TODO LIST
 
 **********************************************************
                       Next Update
-**********************************************************                
+**********************************************************     
 
+- @Feature: There is a setting for the Default Endianness that should be used.
+- @Improv: (For Internal usage) RemoveWhitespace Function.
+- @Feature: Add Setting for Endianness Mode (So that it stays 
+  consistent with what the user wants, specified in settings.json)
+- @Feature: autoclose and autosurround works with most types of braces.
+- @Feature: Comment keybindings now work for m88k files.
 - @Bug: Number Conversion not working with Negative numbers. 
   :Update
   ** Negative Decimal to Hexadecimal now works. However, it is very difficult 

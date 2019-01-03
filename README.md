@@ -4,11 +4,17 @@ This is an attempt to create a fully fledged IDE for the assembly language used 
 
 This project's objective is to help me with some of the classes I'm taking. Ideally, it would make working with this type of assembly as comfortable as working with a higher-level language.
 
+Most of the features are tested using Mocha Unit Testing and should work as expected. If this is not the case, please refer to the **Known Issues** Section.
+
 ## **Features**
 
 Currently it offers the following features:
 
-### M88K-HK
+### Syntax Highlighting
+
+- Complete Syntax Highlighting.
+
+#### M88K-HK
 
 Syntax Highlighting is built around the M88K-HK standard for the language (Which I created). This is the specification per-registry for this standard:
 
@@ -22,14 +28,9 @@ Syntax Highlighting is built around the M88K-HK standard for the language (Which
 - r29 : Reserved register to store the return value if any.
 - r30, r31 : Both Reserved to perform operations with the Stack Pointer.
 
-### Syntax Highlighting
-
-- Complete Syntax Highlighting.
-- Accepting requests [@Github](https://github.com/M-T3K/M88K/issues).
-
 ### Snippets
 
-- Rich Code Snippets available for the most used instructions.
+- Rich Code Snippets available for the most used instructions, MACROs, and repetitive code.
 
 ### Text Manipulation
 
@@ -37,51 +38,60 @@ The following functions manipulate selected text:
 
 - **endianTransform**: Changes the endian mode of a hex number.
 - **addHex**: Adds '0x' at the beginning of a string.
-- **hexToDec**: Converts from Hexadecimal to Decimal.
+- **hexToDec**: Converts from Hexadecimal to Decimal. If it is a negative hexadecimal number you must have a negative sign '-' to specify that it is a negative number. Otherwise it won't work!
 - **decToHex**: Converts from Decimal to Hexadecimal.
 
 ### Global Endianness Mode
 
-This extension supports Big Endian and Little Endian modes at the Global Scope. This means that all operations that require a specific mode use this setting to perform the operation.
+This extension supports Big Endian and Little Endian modes at the Global Scope. This means that all functions will use this mode to provide a result.
 
 ## Planned Features / To Do
 
 - Automation: You should be able to just call the command and see an inmediate result without any selections whatsoever.
-- Matrix Generator: Generate Matrices based on input.
-- Emulator/Interpreter with built-in debugger: An Emulator/Interpreter with Debugging capabilities.
-- Live Syntax Error Detection.
+- Matrix Generator: Generate Matrices based on input with support for random numbers.
+- Instruction Counter: Counts all the instructions in a file.
+- Intellisense & Live Syntax Error Detection.
+- An Emulator/Interpreter with Debugging capabilities.
 
 ## Extension Settings
 
-### Text Manipulation Settings
+### Default Endian Mode
 
-This extension creates the setting `extension.m88k.textTools`, which opens a QuickPick menu to perform several of the text modification functions.
+This extension creates the setting `m88k.defaultEndianMode` to specify the default endian mode to be used upon activation. By default, it is set to `Little Endian`.
 
 ## Known Issues
 
-- Conversion functions do not work properly with negative numbers.
+As of version 0.3.0 I have fixed all bugs/issues that I was aware of. If you encounter any bugs or glitches, or have any suggestions, please, tell me. I'm accepting requests [@Github](https://github.com/M-T3K/M88K/issues)
 
 ## Release Notes
 
 Only information about the last 3 updates are here. For more in-depth information, check our [changelog](https://github.com/M-T3K/M88K/blob/master/CHANGELOG.md).
 
-### [0.3.0] - 02/01/2019
+## Contributing
+
+If you are looking to contribute, feel free to submit a Pull Request to the Repository on [Github](https://github.com/M-T3K/M88K/pulls). You should also check our [TO-DO list]().
+
+### [0.3.0] - 03/01/2019
 
 - Happy New Year. =)
-- Added a Global Endian Mode. Now, instead of having to go through an additional submenu, all operations use this mode. This should make the extension much more user-friendly and VSCode-like.
-- Encountered a bug with conversion functions: Negative number conversion does not work well.
+- Added a Global Endian Mode. Now, instead of having to go through an additional submenu, all operations use this mode. This should make the extension much more user-friendly and VSCode-like. There is also a setting to select the default mode the extension uses (`m88k.defaultEndianMode`).
+- Fixed a bug with conversion functions involving negative numbers. Now, in order to convert a negative Hexadecimal number to its decimal counterpart, you must add '-' before the number you are trying to convert.
+- The Extension will now automatically activate if the m88k language is detected.
+- Changed the Language Name from m88k assembly to M88K.
+- Removed '.asm' from the list of valid language extensions.
+- Autoclose and autosurround works with most types of braces.
+- VSCode keybinds for comments now work fine.
 
 ### [0.2.0] - 12/12/18
 
 - Snippets added.
 
-### 0.1.2 - 12/12/18
+### [0.1.2] - 12/12/18
 
 - Fixed Commands so that they actually work.
 - Fixed a bug with Syntax Highlighting's Regex. Now words ending in ':' will be highlighted correctly.
 
-
----------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------
 
 ## Credits
 

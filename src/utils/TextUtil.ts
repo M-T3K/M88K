@@ -1,16 +1,22 @@
+import { strictEqual } from "assert";
 
 // TEXT
 
 export class TextHelper {
     
+    public removeWhitespace(str: string): string {
+        
+        return str.replace(/\s/g, '');
+    }
+    //--------------------------------------------------------------
 
-    public isValidString(str: string)  {
+    public isValidString(str: string): boolean  {
 
-        return str.replace(/\s/g, '').length !== 0;
+        return this.removeWhitespace(str).length !== 0;
     }
     //--------------------------------------------------------------
     
-    public isHexString(str: string) {
+    public isHexString(str: string): boolean {
 
         return str.substr(0, 2) === "0x";
     }
@@ -19,10 +25,16 @@ export class TextHelper {
 
     // @opt : This is definetely not the fastest nor more efficient way of accomplishing this.
     // This could be improved through binary shift operations
-    public endianTransform(str: string) {
+    public endianTransform(str: string): string {
         
         var endians: string[] = [];
         
+        if(!Texth.isValidString(str)) {
+
+            return "";
+        }
+        str = Texth.removeWhitespace(str);
+
         // We keep the hex in place.
         let last = 0;
         if(this.isHexString(str)) {
@@ -44,7 +56,7 @@ export class TextHelper {
     }
     //--------------------------------------------------------------
     
-    public addHex(str: string) {
+    public addHex(str: string): string {
         
         return "0x".concat(str);
     }

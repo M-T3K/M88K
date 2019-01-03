@@ -8,7 +8,7 @@ const HEX: string = "0123456789abcdef"; // All the possible values of a Hexadeci
 const MAX_HEX_32: number = 0xFFFFFFFF;  // Max Value of an unsigned 32 big Integer.
 export class MathHelper {
     
-    private negDecToHex(str: string) {
+    private negDecToHex(str: string): string {
         
         let num: number = parseInt(str.substr(1), 10);
         num = MAX_HEX_32 - num;
@@ -22,7 +22,7 @@ export class MathHelper {
 
 
     // We assume that the default is Little Endian (that's the way it is in most modern systems)
-    public hexToDec(str: string) {
+    public hexToDec(str: string): string {
         
         let txt: string  = str;
         let neg: boolean = false;
@@ -31,6 +31,8 @@ export class MathHelper {
             return "";
         }
 
+        txt = Texth.removeWhitespace(txt);
+        
         if(txt.charAt(0) === '-') {
             neg = true;
             txt = txt.substr(1);
@@ -59,7 +61,7 @@ export class MathHelper {
     }
     //--------------------------------------------------------------
 
-    public hexToDecBigEndian(str: string) {
+    public hexToDecBigEndian(str: string): string {
 
         let txt: string  = str;
         let neg: boolean = false;
@@ -67,6 +69,8 @@ export class MathHelper {
         if(!Texth.isValidString(txt)) {
             return "";
         }
+
+        txt = Texth.removeWhitespace(txt);
 
         if(txt.charAt(0) === '-') {
             neg = true;
@@ -91,12 +95,13 @@ export class MathHelper {
     }
     //--------------------------------------------------------------
 
-    public decToHex(str: string) {
+    public decToHex(str: string): string {
 
         let txt: string = str;
         if(!Texth.isValidString(txt)) {
             return "0x";
         }
+        txt = Texth.removeWhitespace(txt);
 
         if(txt.charAt(0) === '-') {
 
@@ -109,12 +114,14 @@ export class MathHelper {
     }
     //--------------------------------------------------------------
 
-    public decToHexBigEndian(str: string) {
+    public decToHexBigEndian(str: string): string {
 
         let txt: string = str;
         if(!Texth.isValidString(txt)) {
             return "0x";
         }
+        
+        txt = Texth.removeWhitespace(txt);
 
         if(txt.charAt(0) === '-') {
 

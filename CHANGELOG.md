@@ -1,4 +1,5 @@
 # Change Log
+
 All notable changes to the "m88k" extension will be documented in this file.
 
 ## [0.3.0] - 03/01/2019
@@ -12,6 +13,11 @@ All notable changes to the "m88k" extension will be documented in this file.
     is M88K.
 - Added Unit Testing to quickly test small functions and prevent bugs.
 - General Refactoring of the project's structure.
+- @Feature: autoclose and autosurround works with most types of braces.
+- Added a setting for the Default Endianness that should be used upon activation.
+- Added a RemoveWhitespace() function for internal use. Added Whitespace removal to all
+  functions that may need it.
+- Added a todo file to make life easier and keep track of things.
 
 ## [0.2.0]
 
