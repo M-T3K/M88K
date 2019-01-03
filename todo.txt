@@ -1,6 +1,39 @@
+**********************************************************
+Annotations:
+**********************************************************
+
+- @Bug: Bug that needs fixing.
+- @Improv: Improvement
+- @Issue: High Priority Bug/Glitch/Improvement/Etc
+- @Feature: Feature to implement.
+- @Test: Requires Testing or is related to Testing (such as 
+  improvement of already defined tests)
+
 ==========================================================
 TODO LIST
 ==========================================================
 
-- @TODO: Add Unit Tests (Unit tests work great for small things like this).
+
 - @Bug: Number Conversion not working with Negative numbers.
+- @Feature: Add Intellisense (Auto-complete / suggestions)
+- @Feature: Emulator.
+- @Feature: Debugging Support.
+
+
+**********************************************************
+                      Next Update
+**********************************************************                
+
+- @Test: Add Unit Tests (Unit tests work great for small things like this).
+- @Improv: Change Language Name from m88k assembly to M88K.
+- @Improv: Make it so that the activation event is also 'onLanguage::m88K'.
+- @Feature: Endianness Mode at the Global Scope.
+
+==========================================================
+                          DONE
+==========================================================
+
+- @Feature: Snippets
+- @Feature: Syntax Highlighting.
+- @Feature: Change Endianness of selected hex number
+- @Feature: addHex() to add '0x' to any selected text.

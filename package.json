@@ -2,7 +2,7 @@
     "name": "m88k",
     "displayName": "M88K",
     "description": "Sort of an IDE for assembly in Motorola 88k Microprocessors.",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "publisher": "Kiwii",
     "engines": {
         "vscode": "^1.29.0"
@@ -18,6 +18,7 @@
     },
     "main": "./out/extension",
     "activationEvents": [
+        "onLanguage:m88k",
         "onCommand:extension.m88k.test",
         "onCommand:extension.m88k.textTools",
         "onCommand:extension.m88k.changeEndianMode"
@@ -41,8 +42,9 @@
             {
                 "id": "m88k",
                 "aliases": [
-                    "m88k assembly",
+                    "M88K",
                     "m88k",
+                    "m88k assembly",
                     "asm"
                 ],
                 "extensions": [
@@ -76,6 +78,7 @@
     "devDependencies": {
         "@types/mocha": "^2.2.42",
         "@types/node": "^7.0.43",
+        "ts-node": "^7.0.1",
         "tslint": "^5.12.0",
         "typescript": "^2.6.1",
         "vscode": "^1.1.6"
