@@ -15,6 +15,8 @@ TODO LIST
 
 
 - @Bug: Number Conversion not working with Negative numbers.
+- @Feature: Add Setting for Endiannss Mode (So that it stays 
+  consistent with what the user wants, specified in settings.json)
 - @Feature: Add Intellisense (Auto-complete / suggestions)
 - @Feature: Emulator.
 - @Feature: Debugging Support.

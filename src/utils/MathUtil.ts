@@ -1,12 +1,27 @@
 // MATH
 
+// Imports
+import { Texth } from "./TextUtil";
 
+// Constants
 const HEX: string = "0123456789abcdef"; // All the possible values of a Hexadecimal Number
 
-import { Texth } from "./TextUtil";
-import { Binary } from "./Binary";
 export class MathHelper {
     
+    private negDecToHex(str: string) {
+        
+        let num: number = parseInt(str.substr(1), 10);
+        let maxHex: number = 0xFFFFFFFF;
+        num = maxHex - num;
+        // Due to how 2's complement works, we need to + 1
+        num++;
+
+        // The result is in Big Endian by default. The reason is that it is substracting
+        // from the right. We need to call on endian transform.
+        return Texth.addHex(num.toString(16).toUpperCase());
+    }
+
+
     // We assume that the default is Little Endian (that's the way it is in most modern systems)
     public hexToDec(str: string) {
         
@@ -58,16 +73,14 @@ export class MathHelper {
             return "0x";
         }
 
+        if(txt.charAt(0) === '-') {
+
+            return Texth.endianTransform(this.negDecToHex(txt));
+        }
+
         let num: number = parseInt(txt, 10);
 
-        // @WIP
-        // let bin = new Binary(num);
-        // // Now we should have the binary Number representation of 'num'
-
-        // let hex: string = bin.toHexString();
-            
-        // let mul: number = ((num - 1) | 15) + 1; // Nearest Multiple of 16
-        return Texth.addHex(num.toString(16)); // Gotta do some testing
+        return Texth.addHex(num.toString(16).toUpperCase()); 
     }
     //--------------------------------------------------------------
 
@@ -75,11 +88,17 @@ export class MathHelper {
 
         let txt: string = str;
         if(!Texth.isValidString(txt)) {
-
             return "0x";
         }
-        txt = parseInt(str, 10).toString(16);
-        return Texth.addHex(Texth.endianTransform(txt));
+
+        if(txt.charAt(0) === '-') {
+
+            return this.negDecToHex(txt);
+        }
+
+        let num: number = parseInt(txt, 10);
+
+        return Texth.endianTransform(Texth.addHex(num.toString(16).toUpperCase()));
     }
 
 }

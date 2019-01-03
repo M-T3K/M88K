@@ -5,6 +5,13 @@
 
 // Class
 
+// @info: We don't actually need binary Numbers as of now.
+// However, I won't be erasing this file just yet.
+// Chances are, we might need to have a Binary Number Type later when we are doing
+// the emulator.
+// @CleanUp
+
+
 export class Binary {
 
     num: number[];  // num as an array

@@ -10,6 +10,7 @@ import * as assert from 'assert';
 // import * as myExtension from '../extension';
 
 import { Texth } from "../utils/TextUtil";
+import { Mathh } from '../utils/MathUtil';
 
 
 suite("Text Helper Tests", () => {
@@ -17,30 +18,98 @@ suite("Text Helper Tests", () => {
     // Endian Change
     
     test("Test::EndianChange::1", () => {
-        assert("0x10101010", Texth.endianTransform("0x10101010"));
+        assert.strictEqual( Texth.endianTransform("0x10101010"), "0x10101010");
     });
     test("Test::EndianChange::2", () => {
-        assert("0x10203040", Texth.endianTransform("0x40302010"));
+        assert.strictEqual( Texth.endianTransform("0x40302010"), "0x10203040");
     });
     test("Test::EndianChange::3", () => {
-        assert("0x40302010", Texth.endianTransform("0x10203040"));
+        assert.strictEqual( Texth.endianTransform("0x10203040"), "0x40302010");
     });
     test("Test::EndianChange::4", () => {
-        assert("0x12345678", Texth.endianTransform("0x87654321"));
+        assert.strictEqual( Texth.endianTransform("0x78563412"), "0x12345678");
     });
     test("Test::EndianChange::5", () => {
-        assert("0x87654321", Texth.endianTransform("0x12345678"));
+        assert.strictEqual( Texth.endianTransform("0x12345678"), "0x78563412");
     });
 
     // Add Hex
     test("Test::AddHex::1", () => {
-        assert("0x", Texth.addHex(""));
+        assert.strictEqual( Texth.addHex(""), "0x");
     });
     test("Test::AddHex::2", () => {
-        assert("0x12345678", Texth.addHex("12345678"));
+        assert.strictEqual( Texth.addHex("12345678"), "0x12345678");
     });
     test("Test::AddHex::3", () => {
-        assert("0xblaiawdlajwdawjdljiawdijalwjdlad", Texth.addHex("blaiawdlajwdawjdljiawdijalwjdlad"));
+        assert.strictEqual( Texth.addHex("blaiawdlajwdawjdljiawdijalwjdlad"), "0xblaiawdlajwdawjdljiawdijalwjdlad");
     });
 
+    // IsHexString
+    test("Test::IsHexString::1", () => {
+        assert.strictEqual( Texth.isHexString("0x"), true);
+    });
+    test("Test::IsHexString::2", () => {
+        assert.strictEqual( Texth.isHexString("0x12345678"), true);
+    });
+    test("Test::IsHexString::3", () => {
+        assert.strictEqual( Texth.isHexString(""), false);
+    });
+    test("Test::IsHexString::4", () => {
+        assert.strictEqual( Texth.isHexString("false"), false);
+    });
+
+    // IsValidString
+    test("Test::IsValidString::1", () => {
+        assert.strictEqual( Texth.isValidString("false"), true);
+    });
+    test("Test::IsValidString::2", () => {
+        assert.strictEqual( Texth.isValidString("akdawd"), true);
+    });
+    test("Test::IsValidString::3", () => {
+        assert.strictEqual( Texth.isValidString("0xabcdef"), true);
+    });
+    test("Test::IsValidString::4", () => {
+        assert.strictEqual( Texth.isValidString("   \t \n"), false);
+    });
+    test("Test::IsValidString::5", () => {
+        assert.strictEqual( Texth.isValidString(""), false);
+    });
+});
+
+
+suite("Math Helper Tests", () => {
+
+    // Positive Dec to Hex
+    test("Test::Dec->Hex::1", () => {
+        assert.strictEqual( Mathh.decToHex("1"), "0x1");
+    });
+    test("Test::Dec->Hex::2", () => {
+        assert.strictEqual( Mathh.decToHex("10"), "0xA");
+    });
+    test("Test::Dec->Hex::3", () => {
+        assert.strictEqual( Mathh.decToHex("23"), "0x17");
+    });
+    test("Test::Dec->Hex::4", () => {
+        assert.strictEqual( Mathh.decToHex("3840"), "0xF00");
+    });
+    test("Test::Dec->Hex::5", () => {
+        assert.strictEqual( Mathh.decToHex("11259375"), "0xABCDEF");
+    });
+    
+    // Negative Dec to Hex
+    test("Test::-Dec->Hex::6", () => {
+        assert.strictEqual( Mathh.decToHex("-1"), "0xFFFFFFFF" );
+    });
+    test("Test::-Dec->Hex::7", () => {
+        assert.strictEqual( Mathh.decToHex("-10"), "0xF6FFFFFF");
+    });
+    test("Test::-Dec->Hex::8", () => {
+        assert.strictEqual( Mathh.decToHex("-23"), "0xE9FFFFFF");
+    });
+    test("Test::-Dec->Hex::9", () => {
+        assert.strictEqual( Mathh.decToHex("-3840"), "0x00F1FFFF");
+    });
+    test("Test::-Dec->Hex::10", () => {
+        assert.strictEqual( Mathh.decToHex("-11259375"), "0x113254FF");
+    });
 });
