@@ -59,10 +59,6 @@ export function changeMode() {
 
 export function activate(context: vscode.ExtensionContext) {
 
-    Commands.registerCommand('extension.m88k.test', function() {
-        Window.showInformationMessage('Successful Test');
-    });
-
     Commands.registerCommand("extension.m88k.textTools", textTools);
     Commands.registerCommand("extension.m88k.changeEndianMode", changeMode);
 

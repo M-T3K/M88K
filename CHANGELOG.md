@@ -11,13 +11,14 @@ All notable changes to the "m88k" extension will be documented in this file.
 - Changed Language Name from m88k assembly to M88K.
 - Added an activation event so that the extension automatically activates when the language
     is M88K.
-- Added Unit Testing to quickly test small functions and prevent bugs.
+- Added Unit Testing to quickly test small functions and prevent bugs. There are 41 Unit Tests so far, divided into 2 Mocha Test Suites.
 - General Refactoring of the project's structure.
 - @Feature: autoclose and autosurround works with most types of braces.
 - Added a setting for the Default Endianness that should be used upon activation.
 - Added a RemoveWhitespace() function for internal use. Added Whitespace removal to all
   functions that may need it.
 - Added a todo file to make life easier and keep track of things.
+- Removed M88K::Test() command, as it was unnecessary, as part of CleanUp.
 
 ## [0.2.0]
 

@@ -1,10 +1,10 @@
-# M88K 
+# M88K
 
 This is an attempt to create a fully fledged IDE for the assembly language used by the Motorola 88K family of Microprocessors. So far it does not cover many features but eventually it will have everything that one may need, from Syntax Highlighting to a built-in emulator for this architecture.
 
 This project's objective is to help me with some of the classes I'm taking. Ideally, it would make working with this type of assembly as comfortable as working with a higher-level language.
 
-Most of the features are tested using Mocha Unit Testing and should work as expected. If this is not the case, please refer to the **Known Issues** Section.
+Most of the features are tested using Mocha Unit Testing: There are 41 Unit Tests in total,split into two different Mocha Testing Suites, and everything should work as expected. If this is not the case, please refer to the **Known Issues** Section for instructions on how to report bugs/glitches/issues. Thank you.
 
 Version 0.5.0 has a lot of changes. I'm not going to be actively working on this extension anymore (So I won't push as many updates) due to lack of free time. It is expected that by version 0.9.0 every task in the todo list (except bug fixing) will be done, and 1.0.0 will simply be a bug fixing update to ensure that the extension works properly, and that it has as few bugs as possible. Ideally, by June 2019, we will have reached version 1.0.0, and I will consider this completed.
 
@@ -72,7 +72,7 @@ Only information about the last 3 updates are here. For more in-depth informatio
 
 ## Contributing
 
-If you are looking to contribute, feel free to submit a Pull Request to the Repository on [Github](https://github.com/M-T3K/M88K/pulls). You should also check our [TO-DO list](https://github.com/M-T3K/M88K/blob/master/todo.txt).
+If you are looking to contribute, feel free to submit a Pull Request to the Repository on [Github](https://github.com/M-T3K/M88K/pulls). You should also check our [TO-DO list].(https://github.com/M-T3K/M88K/blob/master/todo.txt).
 
 ### [0.5.0] - 03/01/2019
 

@@ -2,7 +2,7 @@
     "name": "m88k",
     "displayName": "M88K",
     "description": "Sort of an IDE for assembly in Motorola 88k Microprocessors.",
-    "version": "0.3.0",
+    "version": "0.5.0",
     "publisher": "Kiwii",
     "engines": {
         "vscode": "^1.29.0"
@@ -25,10 +25,6 @@
     ],
     "contributes": {
         "commands": [
-            {
-                "command": "extension.m88k.test",
-                "title": "M88K :: TEST()"
-            },
             {
                 "command": "extension.m88k.textTools",
                 "title": "M88K :: Text Tools"
