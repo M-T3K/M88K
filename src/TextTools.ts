@@ -11,8 +11,8 @@ import TextDocument = vscode.TextDocument;
 import TextEditor = vscode.TextEditor;
 
 // My Imports
-import { Texth } from "./utils/TextUtil";
-import { Mathh } from "./utils/MathUtil";
+import Texth = require('./utils/TextUtil');
+import Mathh = require('./utils/MathUtil');
 import { mode } from './extension';
 
 
@@ -20,7 +20,7 @@ function hexToDecimalHandle(editor: TextEditor, doc: TextDocument, S: Selection[
 
     if(mode === true) {
 
-        editor.edit(function (edit)  {
+        editor.edit( edit =>  {
 
             for(let i = 0; i < S.length; ++i) {
     
@@ -31,7 +31,7 @@ function hexToDecimalHandle(editor: TextEditor, doc: TextDocument, S: Selection[
     }
     else {
         
-        editor.edit(function (edit)  {
+        editor.edit( edit =>  {
     
             for(let i = 0; i < S.length; ++i) {
     
@@ -48,7 +48,7 @@ function decToHexHandle(editor: TextEditor, doc: TextDocument, S: Selection[]) {
     if(mode === true) {
 
 
-        editor.edit(function (edit)  {
+        editor.edit( edit => {
     
             for(let i = 0; i < S.length; ++i) {
     
@@ -59,7 +59,7 @@ function decToHexHandle(editor: TextEditor, doc: TextDocument, S: Selection[]) {
     }
     else {
 
-        editor.edit(function (edit)  {
+        editor.edit( edit => {
 
             for(let i = 0; i < S.length; ++i) {
     
@@ -126,7 +126,7 @@ export function textTools() {
         switch(selection.label) {
 
             case "endianTransform":
-                editor.edit(function (edit) {
+                editor.edit( edit => {
 
                     for(let i = 0; i < S.length; ++i) {
 
@@ -137,7 +137,7 @@ export function textTools() {
                 });
                 break;
             case "addHex":
-                editor.edit(function (edit) {
+                editor.edit( edit => {
 
                     for(let i = 0; i < S.length; ++i) {
                         

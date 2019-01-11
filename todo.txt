@@ -13,6 +13,7 @@ Annotations:
 TODO LIST
 ==========================================================
 
+- Add Screenshots and gifs to README
 - @Feature: Spanish Language Support: since most of the community that will be 
   using this extension, I think it would be a good idea to have native Spanish 
   support linked to either the language of the editor itself or a separate setting
@@ -31,7 +32,18 @@ TODO LIST
                       Next Update
 **********************************************************     
 
-- @Feature: There is a setting for the Default Endianness that should be used.
+
+-@Improv: Improved the consistency of the code by making most inline functions arrow functions.
+ This is part 2 of the consistency refactor. Before this, the only ones using arrow functions were 
+ the tests. 
+- @Improv: Remove unnecessary OOP like Utils. Classes should hold data. If we don't use Classes
+  as Data Structures, we might as well not use them.
+
+==========================================================
+                          DONE
+==========================================================
+
+- @Feature: There is a setting for the Default Endianness to use with the extension.
 - @Improv: (For Internal usage) RemoveWhitespace Function.
 - @Feature: Add Setting for Endianness Mode (So that it stays 
   consistent with what the user wants, specified in settings.json)
@@ -49,11 +61,6 @@ TODO LIST
 - @Improv: Change Language Name from m88k assembly to M88K.
 - @Improv: Make it so that the activation event is also 'onLanguage::m88K'.
 - @Feature: Endianness Mode at the Global Scope.
-
-==========================================================
-                          DONE
-==========================================================
-
 - @Feature: Snippets
 - @Feature: Syntax Highlighting.
 - @Feature: Change Endianness of selected hex number

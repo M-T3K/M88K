@@ -9,8 +9,8 @@ import * as assert from 'assert';
 // import * as vscode from 'vscode';
 // import * as myExtension from '../extension';
 
-import { Texth } from "../utils/TextUtil";
-import { Mathh } from '../utils/MathUtil';
+import Texth = require('../utils/TextUtil');
+import Mathh = require('../utils/MathUtil');
 
 
 suite("Text Helper Tests", () => {
