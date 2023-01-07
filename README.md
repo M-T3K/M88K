@@ -6,6 +6,10 @@
 
 # M88K
 
+## Importante
+
+No habrá actualizaciones futuras
+
 Esta extensión es un intento de desarrollar un Entorno de Desarrollo agradable para el lenguaje ensamblador de los microprocesadores de la familia 88000 de Motorola. Por ahora, tiene bastantes carencias, pero está en un punto en el que cumple con su función de hacer el desarrollo más ameno.
 
 El objetivo de este proyecto es ayudarme con alguna de las clases que tengo en la universidad. La idea principal es que me permita trabajar con esta modalidad de ensamblador con la misma facilidad que con un lenguaje de más alto nivel.
@@ -82,6 +86,10 @@ Nota: Todo lo que tenga que ver con las versiones está en Inglés.
 # English
 
 # M88K
+
+## Important
+
+There will be no further updates to this extension.
 
 This is an attempt to create a fully fledged IDE for the assembly language used by the Motorola 88K family of Microprocessors. So far it does not cover many features but eventually it will have everything that one may need, from Syntax Highlighting to a built-in emulator for this architecture.
 
